@@ -31,6 +31,12 @@ public class AppDiscoveryManager {
         this.installedManager = new InstalledAppsManager(context);
     }
 
+    public List<StoreApp> getAllApps() {
+        List<StoreApp> apps = repository.getAllApps();
+        installedManager.updateStoreAppStatuses(apps);
+        return apps;
+    }
+
     public List<StoreApp> getAppsByCategory(String category) {
         List<StoreApp> apps = repository.getAppsByCategory(category);
         installedManager.updateStoreAppStatuses(apps);

@@ -1,729 +1,2198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootLayout"
+    android:id="@+id/rootContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_main"
-    android:paddingStart="36dp"
-    android:paddingEnd="36dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp">
+    android:background="@drawable/bg_wallpaper_midnight">
 
-    <!-- Top Header Bar -->
+    <!-- Main Launcher Layout -->
     <LinearLayout
-        android:id="@+id/headerBar"
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="16dp">
 
-        <!-- Brand Logo & Title -->
-        <ImageView
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:src="@drawable/ic_launcher_vw"
-            android:contentDescription="@null" />
-
+        <!-- =================== HEADER BAR =================== -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="@string/app_name" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/accent_cyan"
-                android:textSize="11sp"
-                android:text="INDEPENDENT OS • V3" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <!-- Network Status Pill -->
-        <LinearLayout
-            android:id="@+id/pillNetwork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:background="@drawable/bg_badge_pill"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/ivHeaderNetIcon"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_wifi"
-                android:contentDescription="@null" />
-
-            <TextView
-                android:id="@+id/tvHeaderNetStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:textColor="@color/accent_cyan"
-                android:textSize="12sp"
-                android:text="Wi-Fi" />
-        </LinearLayout>
-
-        <!-- RAM Usage Monitor Pill (512 MB Budget) -->
-        <LinearLayout
-            android:id="@+id/pillRam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:background="@drawable/bg_badge_pill"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_ram"
-                android:contentDescription="@null" />
-
-            <TextView
-                android:id="@+id/tvHeaderRam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:textColor="@color/accent_cyan"
-                android:textSize="12sp"
-                android:text="RAM: -- / 512 MB" />
-        </LinearLayout>
-
-        <!-- Digital Clock & Date -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:gravity="end"
-            android:orientation="vertical">
-
-            <TextClock
-                android:id="@+id/tcClock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:format24Hour="hh:mm a"
-                android:format12Hour="hh:mm a"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextClock
-                android:id="@+id/tcDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:format24Hour="EEE, MMM d"
-                android:format12Hour="EEE, MMM d"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- Navigation Tabs Bar -->
-    <HorizontalScrollView
-        android:id="@+id/navScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:scrollbars="none">
-
-        <LinearLayout
-            android:id="@+id/navTabsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tabHome"
-                style="@style/TvNavTab"
-                android:text="@string/nav_home" />
-
-            <TextView
-                android:id="@+id/tabApps"
-                style="@style/TvNavTab"
-                android:layout_marginStart="8dp"
-                android:text="@string/nav_apps" />
-
-            <TextView
-                android:id="@+id/tabStore"
-                style="@style/TvNavTab"
-                android:layout_marginStart="8dp"
-                android:text="@string/nav_store" />
-
-            <TextView
-                android:id="@+id/tabLiveTv"
-                style="@style/TvNavTab"
-                android:layout_marginStart="8dp"
-                android:text="@string/nav_live_tv" />
-
-            <TextView
-                android:id="@+id/tabHdmi"
-                style="@style/TvNavTab"
-                android:layout_marginStart="8dp"
-                android:text="@string/nav_hdmi" />
-
-            <TextView
-                android:id="@+id/tabIptv"
-                style="@style/TvNavTab"
-                android:layout_marginStart="8dp"
-                android:text="@string/nav_iptv" />
-
-            <TextView
-                android:id="@+id/tabNetwork"
-                style="@style/TvNavTab"
-                android:layout_marginStart="8dp"
-                android:text="@string/nav_network" />
-
-            <TextView
-                android:id="@+id/tabSettings"
-                style="@style/TvNavTab"
-                android:layout_marginStart="8dp"
-                android:text="@string/nav_settings" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <!-- Main Content Frame (Switches dynamically per Tab) -->
-    <FrameLayout
-        android:id="@+id/contentFrame"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="14dp">
-
-        <!-- =================== TAB 1: HOME =================== -->
-        <ScrollView
-            android:id="@+id/viewTabHome"
+            android:id="@+id/headerBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
+            <!-- OS Branding -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_bolt"
+                    android:background="@drawable/bg_hero_card"
+                    android:padding="8dp"
+                    android:contentDescription="@null" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.04"
+                        android:text="VW LITE OS" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent_cyan"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08"
+                        android:text="ANDROID TV V4 (API 28)" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Navigation Tabs Bar (Glass container) -->
+            <LinearLayout
+                android:id="@+id/navTabsContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/bg_status_pill"
+                android:padding="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tabHome"
+                    style="@style/TvNavTab"
+                    android:drawableStart="@drawable/ic_house"
+                    android:drawablePadding="6dp"
+                    android:text="Home" />
+
+                <TextView
+                    android:id="@+id/tabApps"
+                    style="@style/TvNavTab"
+                    android:layout_marginStart="4dp"
+                    android:drawableStart="@drawable/ic_grid"
+                    android:drawablePadding="6dp"
+                    android:text="Apps" />
+
+                <TextView
+                    android:id="@+id/tabStore"
+                    style="@style/TvNavTab"
+                    android:layout_marginStart="4dp"
+                    android:drawableStart="@drawable/ic_bag"
+                    android:drawablePadding="6dp"
+                    android:text="App Store" />
+
+                <TextView
+                    android:id="@+id/tabIptv"
+                    style="@style/TvNavTab"
+                    android:layout_marginStart="4dp"
+                    android:drawableStart="@drawable/ic_play"
+                    android:drawablePadding="6dp"
+                    android:text="IPTV" />
+
+                <TextView
+                    android:id="@+id/tabInputs"
+                    style="@style/TvNavTab"
+                    android:layout_marginStart="4dp"
+                    android:drawableStart="@drawable/ic_plug"
+                    android:drawablePadding="6dp"
+                    android:text="TV Inputs" />
+
+                <TextView
+                    android:id="@+id/tabNetwork"
+                    style="@style/TvNavTab"
+                    android:layout_marginStart="4dp"
+                    android:drawableStart="@drawable/ic_wifi"
+                    android:drawablePadding="6dp"
+                    android:text="Network" />
+
+                <TextView
+                    android:id="@+id/tabSettings"
+                    style="@style/TvNavTab"
+                    android:layout_marginStart="4dp"
+                    android:drawableStart="@drawable/ic_gear"
+                    android:drawablePadding="6dp"
+                    android:text="Settings" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <!-- Status Pills & System Clock -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- RAM Monitor Pill -->
+                <LinearLayout
+                    android:id="@+id/pillRam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_status_pill"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_microchip"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/tvHeaderRam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:text="RAM: 342MB / 512MB" />
+                </LinearLayout>
+
+                <!-- Network IP Pill -->
+                <LinearLayout
+                    android:id="@+id/pillNetwork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_status_pill"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivHeaderNetIcon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_network_wired"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/tvHeaderNetStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:text="172.20.10.2" />
+                </LinearLayout>
+
+                <!-- Digital Clock -->
+                <TextClock
+                    android:id="@+id/tcClock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:format24Hour="hh:mm a"
+                    android:format12Hour="hh:mm a"
+                    android:textColor="@color/text_primary"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- =================== MAIN CONTENT FRAME =================== -->
+        <FrameLayout
+            android:id="@+id/contentFrame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="12dp">
+
+            <!-- =================== VIEW 1: HOME =================== -->
+            <LinearLayout
+                android:id="@+id/viewTabHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <!-- Featured App Hero Card -->
+                <!-- Cinematic Featured Banner -->
                 <LinearLayout
                     android:id="@+id/cardHero"
                     android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_hero_card"
+                    android:padding="22dp"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_badge_pill"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="3dp"
+                            android:paddingBottom="3dp"
+                            android:textColor="@color/text_primary"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:text="INDEPENDENT OS V3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_status_pill"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="3dp"
+                            android:paddingBottom="3dp"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp"
+                            android:text="CloudTV Bypassed • ARM Mali-G31" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:text="VW Smart TV Independent Experience" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="Welcome to VW Lite OS. Fully independent Android TV 9.0 launcher built for motherboard T.PSK518D.PB806. Enjoy zero ads, lightning-fast navigation, and full local application management." />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnHomeExploreStore"
+                            style="@style/TvActionButton"
+                            android:drawableStart="@drawable/ic_bag"
+                            android:drawablePadding="8dp"
+                            android:text="Explore App Store" />
+
+                        <Button
+                            android:id="@+id/btnHomeLaunchIptv"
+                            style="@style/TvSecondaryButton"
+                            android:layout_marginStart="12dp"
+                            android:drawableStart="@drawable/ic_play"
+                            android:drawablePadding="8dp"
+                            android:text="Launch IPTV Player" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Section: Favorite & Installed Apps Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:text="Favorite &amp; Installed Apps" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_tertiary"
+                            android:textSize="11sp"
+                            android:text="Android API 28 Ready" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvHomeFavorites"
+                        android:layout_width="match_parent"
+                        android:layout_height="105dp"
+                        android:layout_marginTop="6dp"
+                        android:orientation="horizontal"
+                        android:scrollbars="none" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- =================== VIEW 2: APPS =================== -->
+            <LinearLayout
+                android:id="@+id/viewTabApps"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="20dp"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:background="@drawable/bg_hero_card">
-
-                    <ImageView
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
-                        android:src="@drawable/ic_launcher_vw"
-                        android:contentDescription="@null" />
+                    android:gravity="center_vertical">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="20dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/accent_cyan"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:text="FEATURED APPLICATION" />
-
-                        <TextView
-                            android:id="@+id/tvHeroTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            android:text="VW App Store • Curated Market" />
+                            android:text="Installed Applications" />
 
                         <TextView
-                            android:id="@+id/tvHeroSubtitle"
+                            android:id="@+id/tvAppsCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
                             android:textColor="@color/text_secondary"
-                            android:textSize="13sp"
-                            android:text="Discover verified lightweight apps, SmartTube, VLC, IPTV players, and utilities." />
+                            android:textSize="11sp"
+                            android:text="Manage packages, uninstall or check storage (ARM Android 9)" />
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnHeroLaunch"
+                        android:id="@+id/btnAppsInstallMore"
                         style="@style/TvActionButton"
-                        android:text="Explore Store" />
+                        android:text="+ Install More Apps" />
                 </LinearLayout>
 
-                <!-- Section: Favourite Apps -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/section_favorites" />
-
-                <TextView
-                    android:id="@+id/tvEmptyFavorites"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:visibility="gone"
-                    android:text="@string/empty_favorites" />
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvHomeFavorites"
+                    android:id="@+id/rvAllApps"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-
-                <!-- Section: Recently Opened Apps -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/section_recents" />
-
-                <TextView
-                    android:id="@+id/tvEmptyRecents"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:visibility="gone"
-                    android:text="@string/empty_recents" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvHomeRecents"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-
-                <!-- Section: IPTV Favourites -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/section_iptv_favorites" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvHomeIptvFavs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-
-                <!-- Section: Quick TV Inputs -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/section_quick_inputs" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvHomeInputs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-
-            </LinearLayout>
-        </ScrollView>
-
-        <!-- =================== TAB 2: APPS =================== -->
-        <LinearLayout
-            android:id="@+id/viewTabApps"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/tvAppsCount"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:text="Installed Applications" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp"
-                    android:text="Long press any app to Pin to Favorites or View Details" />
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvAllApps"
+            <!-- =================== VIEW 3: APP STORE =================== -->
+            <LinearLayout
+                android:id="@+id/viewTabStore"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="12dp" />
-        </LinearLayout>
-
-        <!-- =================== TAB 3: STORE =================== -->
-        <LinearLayout
-            android:id="@+id/viewTabStore"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <EditText
-                    android:id="@+id/etStoreSearch"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_card_bg"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:hint="@string/store_search_hint"
-                    android:textColorHint="@color/text_secondary"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp"
-                    android:singleLine="true" />
-
-                <Button
-                    android:id="@+id/btnStoreSearch"
-                    style="@style/TvActionButton"
-                    android:layout_marginStart="12dp"
-                    android:text="Search" />
-
-                <Button
-                    android:id="@+id/btnStoreClearCache"
-                    style="@style/TvActionButton"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/btn_clear_cache" />
-            </LinearLayout>
-
-            <!-- Store Categories -->
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:scrollbars="none">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
-                    android:id="@+id/layoutStoreCategories"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvStoreApps"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:text="VW App Store Marketplace" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:text="Direct APK downloads, F-Droid &amp; GitHub verified Android TV packages" />
+                    </LinearLayout>
+
+                    <!-- Filter buttons -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnStoreFilterAll"
+                            style="@style/TvSubNavTab"
+                            android:text="All" />
+
+                        <Button
+                            android:id="@+id/btnStoreFilterStreaming"
+                            style="@style/TvSubNavTab"
+                            android:layout_marginStart="6dp"
+                            android:text="Streaming" />
+
+                        <Button
+                            android:id="@+id/btnStoreFilterUtility"
+                            style="@style/TvSubNavTab"
+                            android:layout_marginStart="6dp"
+                            android:text="Utilities" />
+
+                        <Button
+                            android:id="@+id/btnStoreFilterPlayers"
+                            style="@style/TvSubNavTab"
+                            android:layout_marginStart="6dp"
+                            android:text="Media Players" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvStoreApps"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
+            <!-- =================== VIEW 4: IPTV PLAYER =================== -->
+            <LinearLayout
+                android:id="@+id/viewTabIptv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="12dp" />
-        </LinearLayout>
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        <!-- =================== TAB 4/5: LIVE TV & HDMI =================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:text="VW IPTV Player" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:text="Powered by iptv-org M3U Playlist &amp; ExoPlayer Android 9 engine" />
+                    </LinearLayout>
+
+                    <!-- IPTV Category Filters -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnIptvCatIndia"
+                            style="@style/TvSubNavTab"
+                            android:text="🇮🇳 India Channels" />
+
+                        <Button
+                            android:id="@+id/btnIptvCatNews"
+                            style="@style/TvSubNavTab"
+                            android:layout_marginStart="6dp"
+                            android:text="📰 News" />
+
+                        <Button
+                            android:id="@+id/btnIptvCatSports"
+                            style="@style/TvSubNavTab"
+                            android:layout_marginStart="6dp"
+                            android:text="⚽ Sports" />
+
+                        <Button
+                            android:id="@+id/btnIptvCatMovies"
+                            style="@style/TvSubNavTab"
+                            android:layout_marginStart="6dp"
+                            android:text="🍿 Movies" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Split Layout: Channel List (1/3) & Video Player Screen (2/3) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <!-- Channel List Panel -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_card_bg"
+                        android:padding="12dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/tvIptvCategoryTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:text="India Channels (Live)" />
+
+                            <TextView
+                                android:id="@+id/tvIptvActiveStreams"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/vw_emerald"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:text="12 Active Streams" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvIptvChannels"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <!-- Player Screen Panel -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:layout_marginStart="14dp"
+                        android:background="@drawable/selector_card_bg"
+                        android:padding="14dp"
+                        android:orientation="vertical">
+
+                        <!-- Player Header Info -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_live_pill"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:textColor="@color/vw_rose"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:text="● LIVE" />
+
+                            <TextView
+                                android:id="@+id/tvIptvNowPlayingTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="8dp"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:text="NDTV 24x7 (Live Stream)" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_badge_pill"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:textColor="@color/text_primary"
+                                android:textSize="10sp"
+                                android:text="ExoPlayer Android 9" />
+                        </LinearLayout>
+
+                        <!-- Embedded ExoPlayer Video Frame -->
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginTop="10dp"
+                            android:background="#050811">
+
+                            <com.google.android.exoplayer2.ui.PlayerView
+                                android:id="@+id/pvIptvPlayer"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:use_controller="false"
+                                app:resize_mode="fit" />
+
+                            <!-- Overlay Category Info -->
+                            <TextView
+                                android:id="@+id/tvIptvNowPlayingCategory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|center_horizontal"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/bg_status_pill"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp"
+                                android:text="Category: News &amp; Info • ExoPlayer Active" />
+                        </FrameLayout>
+
+                        <!-- Player Footer Controls -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <Button
+                                android:id="@+id/btnIptvPrev"
+                                style="@style/TvSecondaryButton"
+                                android:drawableStart="@drawable/ic_backward"
+                                android:drawablePadding="6dp"
+                                android:text="Prev" />
+
+                            <Button
+                                android:id="@+id/btnIptvNext"
+                                style="@style/TvSecondaryButton"
+                                android:layout_marginStart="8dp"
+                                android:drawableEnd="@drawable/ic_forward"
+                                android:drawablePadding="6dp"
+                                android:text="Next" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_tertiary"
+                                android:textSize="11sp"
+                                android:text="M3U Playlist Loaded • XMLTV EPG Active" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- =================== VIEW 5: TV INPUT CENTER =================== -->
+            <LinearLayout
+                android:id="@+id/viewTabInputs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="TV Input Center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:text="Manage hardware inputs, Live TV Tuner &amp; HDMI switching through Android TV Input Framework" />
+
+                <!-- 4 TV Input Cards Grid -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <!-- Live TV Tuner -->
+                    <LinearLayout
+                        android:id="@+id/cardInputLiveTv"
+                        style="@style/TvCard"
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_tv"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:text="Live TV Tuner" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp"
+                            android:text="RF Broadcast Antenna" />
+                    </LinearLayout>
+
+                    <!-- HDMI 1 -->
+                    <LinearLayout
+                        android:id="@+id/cardInputHdmi1"
+                        style="@style/TvCard"
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_plug"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:text="HDMI 1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp"
+                            android:text="Set-Top Box / FireStick" />
+                    </LinearLayout>
+
+                    <!-- HDMI 2 -->
+                    <LinearLayout
+                        android:id="@+id/cardInputHdmi2"
+                        style="@style/TvCard"
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_gamepad"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:text="HDMI 2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp"
+                            android:text="PlayStation / Console" />
+                    </LinearLayout>
+
+                    <!-- AV Composite -->
+                    <LinearLayout
+                        android:id="@+id/cardInputAv"
+                        style="@style/TvCard"
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_video"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:text="AV Composite" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp"
+                            android:text="Legacy Audio/Video" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- =================== VIEW 6: NETWORK CENTER =================== -->
+            <LinearLayout
+                android:id="@+id/viewTabNetwork"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Network Center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:text="Manage Wi-Fi discovery, Ethernet status &amp; internet diagnostics (Motherboard T.PSK518D)" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <!-- Wi-Fi Card -->
+                    <LinearLayout
+                        style="@style/TvCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="18dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:src="@drawable/ic_wifi"
+                                android:contentDescription="@null" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    android:text="Wi-Fi Connection" />
+
+                                <TextView
+                                    android:id="@+id/tvWifiSsid"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="11sp"
+                                    android:text="Scanning for Wi-Fi networks..." />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvWifiStateBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_badge_pill"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingTop="3dp"
+                                android:paddingBottom="3dp"
+                                android:textColor="@color/vw_emerald"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:text="Connected" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnNetScanWifi"
+                            style="@style/TvActionButton"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="16dp"
+                            android:text="Scan Available Networks" />
+                    </LinearLayout>
+
+                    <!-- Ethernet IP Card -->
+                    <LinearLayout
+                        style="@style/TvCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="14dp"
+                        android:padding="18dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:src="@drawable/ic_network_wired"
+                                android:contentDescription="@null" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    android:text="Ethernet IP &amp; Diagnostics" />
+
+                                <TextView
+                                    android:id="@+id/tvNetDetails"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="11sp"
+                                    android:text="IP: 172.20.10.2 • GW: 172.20.10.1" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvEthernetStateBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_badge_pill"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingTop="3dp"
+                                android:paddingBottom="3dp"
+                                android:textColor="@color/vw_emerald"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:text="Active" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnNetTest"
+                            style="@style/TvSecondaryButton"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="16dp"
+                            android:text="Run Internet Connectivity Test" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- =================== VIEW 7: SYSTEM SETTINGS =================== -->
+            <LinearLayout
+                android:id="@+id/viewTabSettings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Settings Header & 3 Sub-nav Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:text="VW Lite OS Settings" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:text="Display themes, wallpapers, launcher preferences, Developer Options, Smart Startup &amp; IPTV Auto-Resume" />
+                    </LinearLayout>
+
+                    <!-- Sub Navigation Tabs -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnSettingsGeneral"
+                            style="@style/TvSubNavTab"
+                            android:text="General" />
+
+                        <Button
+                            android:id="@+id/btnSettingsStartup"
+                            style="@style/TvSubNavTab"
+                            android:layout_marginStart="6dp"
+                            android:text="Startup &amp; Playback" />
+
+                        <Button
+                            android:id="@+id/btnSettingsDeveloper"
+                            style="@style/TvSubNavTab"
+                            android:layout_marginStart="6dp"
+                            android:text="Developer Options" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- SUB-VIEW 1: GENERAL SETTINGS -->
+                <ScrollView
+                    android:id="@+id/settingsSubGeneral"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Row 1: Display & Sound -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <!-- Display -->
+                            <LinearLayout
+                                android:id="@+id/cardSettingsDisplay"
+                                style="@style/TvCard"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="16dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:src="@drawable/ic_display"
+                                    android:contentDescription="@null" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:text="Display &amp; Resolution" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="11sp"
+                                        android:text="1080p 60Hz • Mali-G31 GPU Acceleration" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_chevron_right"
+                                    android:contentDescription="@null" />
+                            </LinearLayout>
+
+                            <!-- Sound -->
+                            <LinearLayout
+                                android:id="@+id/cardSettingsSound"
+                                style="@style/TvCard"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:padding="16dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:src="@drawable/ic_volume"
+                                    android:contentDescription="@null" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:text="Sound &amp; Audio Output" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="11sp"
+                                        android:text="Dolby Digital Plus • TV Speakers" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_chevron_right"
+                                    android:contentDescription="@null" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Wallpaper Customization Card -->
+                        <LinearLayout
+                            style="@style/TvCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:padding="16dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:src="@drawable/ic_image"
+                                    android:contentDescription="@null" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:text="Launcher Wallpaper Theme" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="11sp"
+                                        android:text="Select background wallpaper for VW Lite OS" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_badge_pill"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:paddingTop="3dp"
+                                    android:paddingBottom="3dp"
+                                    android:textColor="@color/accent_cyan"
+                                    android:textSize="10sp"
+                                    android:text="Custom Theme" />
+                            </LinearLayout>
+
+                            <!-- Theme Selector Swatches -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/btnThemeMidnight"
+                                    style="@style/TvSecondaryButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Midnight Blue" />
+
+                                <Button
+                                    android:id="@+id/btnThemeCyber"
+                                    style="@style/TvSecondaryButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Cyber Neon" />
+
+                                <Button
+                                    android:id="@+id/btnThemeEmerald"
+                                    style="@style/TvSecondaryButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Emerald Forest" />
+
+                                <Button
+                                    android:id="@+id/btnThemeCosmic"
+                                    style="@style/TvSecondaryButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Cosmic Purple" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Row 3: Device Info & Recovery -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <!-- Device Info -->
+                            <LinearLayout
+                                android:id="@+id/cardSettingsDevice"
+                                style="@style/TvCard"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="16dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:src="@drawable/ic_info"
+                                    android:contentDescription="@null" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:text="Device &amp; Firmware Info" />
+
+                                    <TextView
+                                        android:id="@+id/tvSettingsDeviceSummary"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="11sp"
+                                        android:text="Android 9 • API 28 • Firmware 20260227" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_chevron_right"
+                                    android:contentDescription="@null" />
+                            </LinearLayout>
+
+                            <!-- CloudTV Recovery -->
+                            <LinearLayout
+                                android:id="@+id/cardSettingsRecovery"
+                                style="@style/TvCard"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:padding="16dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:src="@drawable/ic_shield"
+                                    android:contentDescription="@null" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:text="Original Launcher Recovery" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="11sp"
+                                        android:text="CloudTV backup is preserved intact" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_badge_pill"
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
+                                    android:paddingTop="2dp"
+                                    android:paddingBottom="2dp"
+                                    android:textColor="@color/vw_emerald"
+                                    android:textSize="10sp"
+                                    android:text="Safe" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </ScrollView>
+
+                <!-- SUB-VIEW 2: STARTUP & PLAYBACK SETTINGS -->
+                <ScrollView
+                    android:id="@+id/settingsSubStartup"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="none"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Startup Destination Card -->
+                        <LinearLayout
+                            style="@style/TvCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:src="@drawable/ic_power_off"
+                                android:contentDescription="@null" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:text="Default Startup Destination" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="11sp"
+                                    android:text="Select which section opens automatically when VW Lite OS starts" />
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/spStartupDestination"
+                                android:layout_width="220dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/bg_spinner"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp" />
+                        </LinearLayout>
+
+                        <!-- IPTV Auto Resume & Session Card -->
+                        <LinearLayout
+                            style="@style/TvCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:padding="16dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.04"
+                                android:text="IPTV AUTO-RESUME &amp; SESSION MANAGER" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <CheckBox
+                                    android:id="@+id/cbAutoResume"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"
+                                    android:checked="true"
+                                    android:text="Enable Auto-Resume IPTV" />
+
+                                <CheckBox
+                                    android:id="@+id/cbAutoPlay"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"
+                                    android:checked="true"
+                                    android:text="Auto-Play Last Channel" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <CheckBox
+                                    android:id="@+id/cbNetReconnect"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"
+                                    android:checked="true"
+                                    android:text="Network Reconnect Check" />
+
+                                <CheckBox
+                                    android:id="@+id/cbRestoreAspect"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"
+                                    android:checked="true"
+                                    android:text="Restore Aspect Ratio" />
+                            </LinearLayout>
+
+                            <!-- Startup Delay Spinner -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold"
+                                        android:text="Startup Delay (Network Sync)" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="10sp"
+                                        android:text="Allows Wi-Fi/Ethernet (172.20.10.2) to initialize before streaming" />
+                                </LinearLayout>
+
+                                <Spinner
+                                    android:id="@+id/spStartupDelay"
+                                    android:layout_width="160dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/bg_spinner"
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Active Session Summary Card -->
+                        <LinearLayout
+                            style="@style/TvCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:padding="16dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.04"
+                                android:text="ACTIVE SESSION SUMMARY" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="#0A0F1D"
+                                android:padding="10dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvSessPlayer"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/accent_cyan"
+                                    android:textSize="11sp"
+                                    android:text="Last Player: VW IPTV Player (Built-in ExoPlayer)" />
+
+                                <TextView
+                                    android:id="@+id/tvSessPlaylist"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textColor="@color/vw_emerald"
+                                    android:textSize="11sp"
+                                    android:text="Last Playlist: iptv-org / India Channels (Public M3U)" />
+
+                                <TextView
+                                    android:id="@+id/tvSessChannel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textColor="@color/accent_gold"
+                                    android:textSize="11sp"
+                                    android:text="Last Channel: NDTV 24x7 (Live HD)" />
+
+                                <TextView
+                                    android:id="@+id/tvSessIp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textColor="@color/vw_purple"
+                                    android:textSize="11sp"
+                                    android:text="Last IP: 172.20.10.2" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/btnPreviewStartup"
+                                    style="@style/TvActionButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Preview Startup Behavior" />
+
+                                <Button
+                                    android:id="@+id/btnResetStartup"
+                                    style="@style/TvSecondaryButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="10dp"
+                                    android:text="Clear History &amp; Reset" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </ScrollView>
+
+                <!-- SUB-VIEW 3: DEVELOPER OPTIONS -->
+                <ScrollView
+                    android:id="@+id/settingsSubDeveloper"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="none"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Master Dev Mode Card -->
+                        <LinearLayout
+                            android:id="@+id/cardDevMaster"
+                            style="@style/TvCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:src="@drawable/ic_code"
+                                    android:contentDescription="@null" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="15sp"
+                                        android:textStyle="bold"
+                                        android:text="Developer Mode (Android 9 API 28)" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="11sp"
+                                        android:text="Enables USB Debugging, ADB over TCP, and system diagnostic inspection for motherboard T.PSK518D" />
+                                </LinearLayout>
+
+                                <!-- Toggle Button -->
+                                <Button
+                                    android:id="@+id/btnDevToggle"
+                                    style="@style/TvSecondaryButton"
+                                    android:text="Toggle Mode" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:paddingTop="8dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvDevStatusText"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/accent_gold"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:text="Status: Active / Inspected" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_tertiary"
+                                    android:textSize="10sp"
+                                    android:text="Settings.Global.DEVELOPMENT_SETTINGS_ENABLED" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- ADB Debugging & Connection Card -->
+                        <LinearLayout
+                            style="@style/TvCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:padding="16dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.04"
+                                android:text="ADB DEBUGGING &amp; CONNECTION" />
+
+                            <!-- 3 Status Pills Grid -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="#0A0F1D"
+                                    android:padding="10dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="10sp"
+                                        android:text="USB Debugging" />
+
+                                    <TextView
+                                        android:id="@+id/tvAdbUsbStatus"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/vw_rose"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold"
+                                        android:text="Disabled / Restricted" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:background="#0A0F1D"
+                                    android:padding="10dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="10sp"
+                                        android:text="TV IP Address" />
+
+                                    <TextView
+                                        android:id="@+id/tvAdbIpStatus"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/accent_cyan"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold"
+                                        android:text="172.20.10.2" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:background="#0A0F1D"
+                                    android:padding="10dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="10sp"
+                                        android:text="ADB Network Status" />
+
+                                    <TextView
+                                        android:id="@+id/tvAdbNetStatus"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/accent_gold"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold"
+                                        android:text="Unavailable / Port 5555" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <!-- Action Buttons -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/btnDevOpenSettings"
+                                    style="@style/TvSecondaryButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Open Dev Settings" />
+
+                                <Button
+                                    android:id="@+id/btnDevUsbDebugging"
+                                    style="@style/TvSecondaryButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:text="USB Debugging" />
+
+                                <Button
+                                    android:id="@+id/btnDevCopyIp"
+                                    style="@style/TvActionButton"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Copy TV IP" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Additional Developer Cards -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/cardDevRunningServices"
+                                style="@style/TvCard"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="14dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ic_microchip"
+                                    android:contentDescription="@null" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="10dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="13sp"
+                                        android:textStyle="bold"
+                                        android:text="Running Services &amp; RAM" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="10sp"
+                                        android:text="Inspect background memory usage" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/cardDevGpuInfo"
+                                style="@style/TvCard"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:padding="14dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ic_gear"
+                                    android:contentDescription="@null" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="10dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_primary"
+                                        android:textSize="13sp"
+                                        android:textStyle="bold"
+                                        android:text="GPU Rendering Info" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/text_secondary"
+                                        android:textSize="10sp"
+                                        android:text="Mali-G31 MP2 hardware stats" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </ScrollView>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!-- =================== FOOTER REMOTE CONTROL GUIDE =================== -->
         <LinearLayout
-            android:id="@+id/viewTabInputs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingTop="6dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_status_pill"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/text_primary"
+                android:textSize="10sp"
+                android:text="Arrow Keys" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:text="D-Pad Navigate" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_status_pill"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/text_primary"
+                android:textSize="10sp"
+                android:text="Enter / OK" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:text="Select" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_status_pill"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/text_primary"
+                android:textSize="10sp"
+                android:text="Tab" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:text="Switch Views" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_tertiary"
+                android:textSize="11sp"
+                android:text="VW Lite OS V4 • Package: com.vw.liteos • 512MB RAM Optimized" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- =================== TOAST NOTIFICATION MODAL OVERLAY =================== -->
+    <FrameLayout
+        android:id="@+id/layoutToastModal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="440dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_dialog_glass"
+            android:padding="24dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivToastIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_info"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/tvToastTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@string/inputs_title" />
+                android:text="Notice" />
 
             <TextView
+                android:id="@+id/tvToastMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
                 android:textColor="@color/text_secondary"
-                android:textSize="13sp"
-                android:text="Direct access to TV Tuner and HDMI 1 / 2 / 3 hardware inputs." />
+                android:textSize="12sp"
+                android:lineSpacingExtra="3dp"
+                android:text="Message content goes here." />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvInputsTab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+            <Button
+                android:id="@+id/btnToastClose"
+                style="@style/TvActionButton"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="OK / Close" />
         </LinearLayout>
-
-        <!-- =================== TAB 6: IPTV =================== -->
-        <LinearLayout
-            android:id="@+id/viewTabIptv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <EditText
-                    android:id="@+id/etIptvSearch"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_card_bg"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:hint="@string/iptv_search_hint"
-                    android:textColorHint="@color/text_secondary"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp"
-                    android:singleLine="true" />
-
-                <Button
-                    android:id="@+id/btnIptvRefresh"
-                    style="@style/TvActionButton"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/iptv_refresh" />
-            </LinearLayout>
-
-            <!-- IPTV Categories -->
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:id="@+id/layoutIptvCategories"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvIptvChannels"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="12dp" />
-        </LinearLayout>
-
-        <!-- =================== TAB 7: NETWORK =================== -->
-        <ScrollView
-            android:id="@+id/viewTabNetwork"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:text="@string/network_title" />
-
-                <!-- Network Status Card -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:background="@drawable/selector_card_bg">
-
-                    <TextView
-                        android:id="@+id/tvNetTypeTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/accent_cyan"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="Connection: Wi-Fi" />
-
-                    <TextView
-                        android:id="@+id/tvNetDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/text_primary"
-                        android:textSize="14sp"
-                        android:lineSpacingExtra="4dp"
-                        android:text="IP: 192.168.1.x\nGateway: 192.168.1.1\nDNS: 8.8.8.8" />
-
-                    <TextView
-                        android:id="@+id/tvNetDiagnosticResult"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:textColor="@color/accent_gold"
-                        android:textSize="13sp"
-                        android:text="Diagnostic: Ready to test" />
-                </LinearLayout>
-
-                <!-- Action Buttons -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnNetTest"
-                        style="@style/TvActionButton"
-                        android:text="@string/btn_test_connection" />
-
-                    <Button
-                        android:id="@+id/btnNetOpenWifi"
-                        style="@style/TvActionButton"
-                        android:layout_marginStart="14dp"
-                        android:text="@string/btn_open_wifi_settings" />
-
-                    <Button
-                        android:id="@+id/btnNetOpenEthernet"
-                        style="@style/TvActionButton"
-                        android:layout_marginStart="14dp"
-                        android:text="@string/btn_open_ethernet_settings" />
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-
-        <!-- =================== TAB 8: SETTINGS =================== -->
-        <ScrollView
-            android:id="@+id/viewTabSettings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:text="@string/settings_title" />
-
-                <!-- Hardware & Device Info Card -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:background="@drawable/selector_card_bg">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/accent_cyan"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="@string/settings_hardware_info" />
-
-                    <TextView
-                        android:id="@+id/tvSettingsHardware"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/text_primary"
-                        android:textSize="14sp"
-                        android:lineSpacingExtra="4dp"
-                        android:text="Manufacturer: VW\nMotherboard: T.PSK518D.PB806\nCPU: ARM 4-Core\nGPU: Mali-G31 MP2\nRAM: 512 MB Budget\nAndroid: 9.0 (Pie, API 28)\nFirmware: 20260227_153820" />
-                </LinearLayout>
-
-                <!-- Actions -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnSettingsCleanRam"
-                        style="@style/TvActionButton"
-                        android:text="@string/btn_clean_ram" />
-
-                    <Button
-                        android:id="@+id/btnSettingsOpenNative"
-                        style="@style/TvActionButton"
-                        android:layout_marginStart="14dp"
-                        android:text="@string/settings_native_android" />
-
-                    <Button
-                        android:id="@+id/btnSettingsResetLauncher"
-                        style="@style/TvActionButton"
-                        android:layout_marginStart="14dp"
-                        android:text="@string/btn_reset_launcher" />
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-
     </FrameLayout>
 
-</LinearLayout>
+</FrameLayout>

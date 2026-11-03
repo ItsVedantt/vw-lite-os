@@ -117,6 +117,10 @@ public class IPTVManager {
         });
     }
 
+    public List<IPTVChannel> getAllChannels() {
+        return getChannelsByCategory("All");
+    }
+
     public List<IPTVChannel> getChannelsByCategory(String category) {
         synchronized (cachedChannels) {
             if (category == null || category.equalsIgnoreCase("All") || category.equalsIgnoreCase("All Channels")) {

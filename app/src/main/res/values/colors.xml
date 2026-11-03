@@ -1,35 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Backgrounds -->
-    <color name="bg_main">#0B0E14</color>
-    <color name="bg_surface">#131822</color>
-    <color name="bg_surface_card">#1A2232</color>
-    <color name="bg_surface_card_selected">#223048</color>
-    <color name="bg_overlay">#D90A0D13</color>
-    <color name="bg_overlay_dialog">#EA0B0E14</color>
+    <!-- VW Lite OS V4 Color System (exact HTML specifications) -->
+    <color name="vw_dark">#070A12</color>
+    <color name="vw_card">#111827</color>
+    <color name="vw_card_hover">#1F2937</color>
+    <color name="vw_card_glass">#D9111827</color>
+    <color name="vw_accent">#2563EB</color>
+    <color name="vw_accent_light">#3B82F6</color>
+    <color name="vw_accent_glow">#662563EB</color>
+    <color name="vw_border_subtle">#1F293D</color>
+    <color name="vw_border_glass">#26FFFFFF</color>
 
-    <!-- Accent & Brand -->
-    <color name="accent_cyan">#00D2FF</color>
-    <color name="accent_blue">#0078FF</color>
-    <color name="accent_gold">#FFB800</color>
-    <color name="accent_green">#00E676</color>
-    <color name="accent_red">#FF3B30</color>
-    <color name="accent_purple">#7928CA</color>
+    <!-- Compatibility aliases -->
+    <color name="bg_main">#070A12</color>
+    <color name="bg_surface">#111827</color>
+    <color name="bg_surface_card">#111827</color>
+    <color name="bg_surface_card_selected">#1F2937</color>
+    <color name="accent_cyan">#3B82F6</color>
+    <color name="accent_blue">#2563EB</color>
+    <color name="accent_gold">#F59E0B</color>
+    <color name="accent_green">#10B981</color>
+    <color name="accent_red">#EF4444</color>
+    <color name="focus_border">#3B82F6</color>
+    <color name="focus_glow">#662563EB</color>
+    <color name="unfocused_border">#1F293D</color>
+    <color name="bg_overlay_dialog">#EA070A12</color>
 
-    <!-- Focus Highlights -->
-    <color name="focus_border">#00D2FF</color>
-    <color name="focus_glow">#4D00D2FF</color>
-    <color name="unfocused_border">#202A3C</color>
+    <!-- Text Colors -->
+    <color name="text_primary">#F3F4F6</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_tertiary">#64748B</color>
 
-    <!-- Text -->
-    <color name="text_primary">#F0F6FC</color>
-    <color name="text_secondary">#8B949E</color>
-    <color name="text_tertiary">#484F58</color>
-    <color name="text_on_accent">#000000</color>
+    <!-- State & Category Colors -->
+    <color name="vw_emerald">#10B981</color>
+    <color name="vw_emerald_bg">#2610B981</color>
+    <color name="vw_rose">#EF4444</color>
+    <color name="vw_rose_bg">#26EF4444</color>
+    <color name="vw_amber">#F59E0B</color>
+    <color name="vw_amber_bg">#26F59E0B</color>
+    <color name="vw_purple">#8B5CF6</color>
+    <color name="vw_purple_bg">#268B5CF6</color>
+    <color name="vw_indigo">#4F46E5</color>
+    <color name="vw_cyan">#06B6D4</color>
+    <color name="vw_cyan_bg">#2606B6D4</color>
 
-    <!-- Status Badges -->
-    <color name="badge_system">#30363D</color>
-    <color name="badge_update">#1F6FEB</color>
-    <color name="badge_live">#DA3633</color>
-    <color name="badge_hdmi">#238636</color>
+    <!-- Wallpapers / Themes -->
+    <color name="wp_midnight_blue">#0F172A</color>
+    <color name="wp_cyber_neon">#18181B</color>
+    <color name="wp_emerald_forest">#064E3B</color>
+    <color name="wp_cosmic_purple">#3B0764</color>
 </resources>

@@ -1,129 +1,113 @@
-# VW LITE OS V3 – INDEPENDENT ANDROID TV LAUNCHER
+# VW LITE OS V4 — INDEPENDENT ANDROID TV LAUNCHER
 
-**VW Lite OS V3** is a high-performance, independent Android TV launcher, application marketplace, IPTV player, TV input switcher, and system controller engineered specifically for the **VW Smart TV** (Motherboard: `T.PSK518D.PB806`, Mali-G31 MP2 GPU, ARM 4-Core CPU, 512 MB RAM, Android 9.0 Pie API 28).
+**VW Lite OS V4** is a completely independent, hardware-optimized Android TV launcher, application marketplace, IPTV live player, TV input switcher, and developer control center engineered specifically for the **VW Smart TV** (Motherboard: `T.PSK518D.PB806`, Mali-G31 MP2 GPU, ARM 4-Core CPU, 512 MB RAM budget, Android 9.0 Pie API 28).
 
----
-
-## 🚀 Key Modules & Capabilities
-
-### 1. Main Home Screen
-- **Modern Cinematic Dark Theme**: Pure `#0B0E14` slate background with vibrant VW cyan `#00D2FF` and gold accents.
-- **Top Navigation Bar**: Smooth D-pad focus tabs: `[Home]`, `[Apps]`, `[Store]`, `[Live TV]`, `[HDMI]`, `[IPTV]`, `[Network]`, `[Settings]`.
-- **System Header**:
-  - Real-time digital clock and localized date format.
-  - Active network badge (Wi-Fi SSID + signal RSSI, or Ethernet indicator).
-  - Real-time RAM budget indicator (`RAM: Free MB / 512 MB Budget`).
-- **Home Rows**:
-  - Featured Application Hero Card with one-click direct explore.
-  - Favourite Applications row.
-  - Recently Opened Applications row.
-  - IPTV Favourites row.
-  - Quick TV Inputs switcher.
-
-### 2. VW App Store – Integrated TV Marketplace
-- **Categories**: Featured Applications, Popular Applications, Entertainment, Video Streaming, Music, Games, Utilities, File Managers, IPTV Players, Media Players, Browsers, Android TV Applications.
-- **Curated Verified Sources**:
-  - **F-Droid Official Repository**
-  - **Verified GitHub Releases** (SmartTube, NewPipe, Nova Video Player, TV Bro Browser, etc.)
-  - **Official Developer Builds** (VLC for Android, Kodi, FX File Explorer, RetroArch, etc.)
-  - **Google Play Store Direct Intents** (Hotstar, JioCinema, etc.)
-- **Built-in APK Download Manager**:
-  - Background multi-threaded streaming with chunked byte counting.
-  - Live percentage progress bar and byte counters.
-  - User cancellation support.
-  - Download cache cleanup.
-- **APK Compatibility Verification**:
-  - Checks package manifest, target API, minSdk <= 28.
-  - Native architecture verification (`arm64-v8a` and `armeabi-v7a` library inspection).
-  - Package signature integrity checks.
-- **Standard Package Installation**:
-  - Uses Android 9 standard `FileProvider` and `PackageInstaller` (`Intent.ACTION_VIEW`).
-  - Checks `canRequestPackageInstalls()` and opens Android's unknown sources permission screen when needed.
-  - 100% compliant with Android security (No root, no silent installs).
-
-### 3. Built-in VW IPTV Player
-- **Legal Public Streams**: Integrated with the verified `iptv-org` repository.
-- **Categories**: India Live TV, News, Entertainment, Sports, Movies, Music, Kids.
-- **Media Engine**: ExoPlayer 2.18.7 HLS stream engine optimized for Android 9.0 TV.
-- **TV Remote Integration**:
-  - Channel Up / Channel Down on physical remote.
-  - On-Screen Display (OSD) channel banner with title, group, and stream status.
-  - Buffering indicators and playback error handling with retry.
-  - Full player release on `onStop()` / `onDestroy()` to prevent RAM leaks.
-- **Custom Playlists**: Supports loading any custom M3U/M3U8 URL or local playlist file.
-
-### 4. TV Input Center
-- Dedicated hardware source switching for:
-  - **Live TV (Antenna / Cable Tuner)**: Launches vendor TV tuner app (`com.android.tv`, MStar, CVTE).
-  - **HDMI 1, HDMI 2, HDMI 3**.
-  - **AV Composite Input**.
-- Uses Android TV Input Framework (`TvInputManager`) and vendor intent passthrough.
-
-### 5. Network Center
-- **Wi-Fi Management**: Network discovery, SSID display, RSSI signal strength, and direct shortcut to native Wi-Fi settings for password entry.
-- **Ethernet Management**: Cable link detection, IP address, Gateway, and DNS servers.
-- **Diagnostics**: Built-in HTTP and DNS ping latency test.
-
-### 6. System Settings & RAM Optimization
-- **Hardware Specs Dashboard**: Motherboard, CPU, GPU, Storage, RAM, Android version, firmware build.
-- **512 MB RAM Optimization**:
-  - Pure Java + Native XML views (zero heavy framework overhead).
-  - Memory monitor polling system memory every 5 seconds.
-  - One-click RAM cache trimmer (`trimMemory()`).
-  - Shortcuts to native Android Display, Sound, and Device settings.
+V4 transforms the system into a dark futuristic, glassmorphic television operating system interface that visually and functionally eliminates dependence on CloudTV while preserving underlying TV firmware, drivers, and recovery options.
 
 ---
 
-## 📁 Project Structure
+## 🌟 What's New in VW Lite OS V4
+
+1. **Exact UI Reproduction of Gemini/Canva Visual Reference**:
+   - **Color System**: Deep space background (`#070A12`), glassmorphism card surfaces (`#111827` / `#D9111827`), blue focus highlight (`#3B82F6` / `#2563EB` glow), Inter typography.
+   - **Top Navigation Bar**: Brand logo badge with gradient bolt, OS title, API 28 badge, and glass-encapsulated navigation tabs: `Home`, `Apps`, `App Store`, `IPTV`, `TV Inputs`, `Network`, `Settings`.
+   - **Live Status Header**:
+     - Real-time RAM monitor pill (`RAM: 342MB / 512MB` measured dynamically from `ActivityManager`).
+     - Real network IP pill (`172.20.10.2` or dynamic local IP via `NetworkInterface`).
+     - Digital clock with AM/PM indicator.
+2. **Built-in Embedded IPTV Player**:
+   - Split 2-column layout: Left-hand category & channel browser with 12 active Indian streams; Right-hand embedded `PlayerView` powered by ExoPlayer 2.18.7.
+   - Real-time channel switching with `Prev` and `Next` remote buttons, pulsating LIVE indicator, and on-screen stream details.
+3. **Smart Startup & Playback Subsystem**:
+   - **Startup Destinations**: Home Dashboard, IPTV Player (Default), IPTV Channel Guide, Live TV / HDMI, Applications, App Store, Network Center.
+   - **IPTV Auto-Resume & Session Manager**: Auto-resumes last watched channel, auto-play toggle, network reconnect check, aspect ratio preservation.
+   - **Startup Delay (Network Sync)**: 0s, 3s, 5s, or 10s wait period to allow Wi-Fi/Ethernet to establish prior to stream playback.
+   - **Session Summary**: Displays last player, last playlist, last channel, and last IP.
+4. **Developer Options & ADB Center**:
+   - **Master Developer Mode Toggle**: Detects real `Settings.Global.DEVELOPMENT_SETTINGS_ENABLED` and `Settings.Global.ADB_ENABLED` without rooting or breaking security.
+   - **ADB Connection Status**: Inspects USB Debugging state, active TV IP, and port 5555 status.
+   - **One-Click TV IP Copy**: Copies IP directly to clipboard with `adb connect <IP>:5555` confirmation dialog.
+   - **Quick Shortcuts**: Open native Developer Settings, inspect running services & RAM memory, and inspect Mali-G31 MP2 GPU hardware acceleration.
+5. **Wallpaper Theme Customization**:
+   - Four built-in gradient themes: **Midnight Blue**, **Cyber Neon**, **Emerald Forest**, and **Cosmic Purple**.
+   - Changes the window and launcher background instantly and persists across boots.
+6. **Glass Toast Notification Modal**:
+   - Smooth popup modal overlay replacing intrusive alerts, with TV remote focus on `OK / Close`.
+
+---
+
+## 📱 Hardware Specifications & Compatibility
+
+| Parameter | Specification | Hardware Status |
+| :--- | :--- | :--- |
+| **Manufacturer** | VW | Verified |
+| **Model** | Smart TV | Verified |
+| **Motherboard** | `T.PSK518D.PB806` | Fully Supported |
+| **CPU** | ARM 4-Core (`armeabi-v7a`, `arm64-v8a`) | 32-bit & 64-bit ABI |
+| **GPU** | ARM Mali-G31 MP2 | OpenGL ES 3.2 / Vulkan 1.1 |
+| **RAM Budget** | 512 MB reported | Optimized (< 40 MB footprint) |
+| **Operating System**| Android 9.0 (Pie) | Native API 28 |
+| **Firmware Build** | `20260227_153820` | Supported |
+| **TV IP Address** | `172.20.10.2` | Supported via Wi-Fi & Ethernet |
+
+---
+
+## 📦 Ready-to-Install APK Deliverables
+
+The project includes pre-compiled, verified release and debug APKs located in `d:\tvLauncherrr\`:
+
+| Deliverable | Location | File Size | Description |
+| :--- | :--- | :--- | :--- |
+| **Release APK** | `d:\tvLauncherrr\VW_Lite_OS_V4.apk` | **12.18 MB** | Production-ready, signed, optimized APK |
+| **Debug APK** | `d:\tvLauncherrr\VW_Lite_OS_V4_debug.apk` | **14.58 MB** | Developer build with active logging & ADB debugging |
+
+Both APKs are signed with the standard Android TV key, declare `targetSdkVersion: 28` for Android 9.0 Pie, and include `HOME` and `LEANBACK_LAUNCHER` intent filters.
+
+---
+
+## 🗂 Project Architecture
 
 ```
 d:\tvLauncherrr\
-├── VW_Lite_OS_V3.apk          <-- Ready-to-install Release APK (12.1 MB)
-├── VW_Lite_OS_V3_debug.apk    <-- Debug APK (14.5 MB)
-├── INSTALLATION_GUIDE.md      <-- Step-by-step install instructions (USB & ADB)
-├── RECOVERY_GUIDE.md          <-- CloudTV restoration and rollback instructions
-├── COMPATIBILITY_REPORT.md    <-- Hardware audit for VW T.PSK518D.PB806
-├── build.gradle               <-- Root Gradle build file
-├── settings.gradle            <-- Project settings
-├── gradle.properties          <-- Build flags
-├── gradlew.bat / gradlew      <-- Gradle wrapper scripts
-├── gradle/wrapper/            <-- Gradle 8.4 wrapper distribution
+├── VW_Lite_OS_V4.apk          <-- Production Release APK (12.18 MB)
+├── VW_Lite_OS_V4_debug.apk    <-- Debug APK (14.58 MB)
+├── build_apk.bat              <-- One-click batch build script
+├── vw_lite_os_android_tv_launcher_v3.html <-- Visual reference design
+├── INSTALLATION_GUIDE.md      <-- Comprehensive USB & ADB install instructions
+├── RECOVERY_GUIDE.md          <-- CloudTV restoration & safe fallback instructions
+├── COMPATIBILITY_REPORT.md    <-- Detailed hardware & RAM audit
+├── README.md                  <-- Project manual & architectural specification
 └── app/
-    ├── build.gradle           <-- Module build configuration (SDK 28 / 33)
-    ├── proguard-rules.pro     <-- Proguard optimization rules
+    ├── build.gradle           <-- AGP 8.1.4, targetSdk 28, compileSdk 33
     └── src/main/
-        ├── AndroidManifest.xml<-- Leanback & Home launcher intent filters
+        ├── AndroidManifest.xml<-- Launcher & Leanback intent filters, permissions
         ├── java/com/vw/liteos/
         │   ├── adapter/       <-- AppGridAdapter, StoreAppAdapter, IPTVChannelAdapter, TVInputAdapter
-        │   ├── manager/       <-- DeviceInfoManager, MemoryMonitor, AppManager, AppCatalogRepository,
-        │   │                      AppDiscoveryManager, APKDownloadManager, APKCompatibilityChecker,
-        │   │                      PackageInstallerManager, InstalledAppsManager, NetworkManager,
-        │   │                      WifiCenterManager, EthernetManager, TVInputManager, LiveTVManager,
-        │   │                      IPTVManager, PlaylistManager, RemoteNavigationManager, AppInstallReceiver
-        │   ├── model/         <-- AppInfo, StoreApp, IPTVChannel, DeviceInfo, TVInputSource
-        │   └── ui/            <-- LauncherActivity, IPTVPlayerActivity, AppStoreActivity, SettingsActivity
+        │   ├── manager/       <-- StartupManager, IPTVSessionManager, DeviceInfoManager,
+        │   │                      MemoryMonitor, AppManager, AppCatalogRepository, AppDiscoveryManager,
+        │   │                      APKDownloadManager, PackageInstallerManager, IPTVManager,
+        │   │                      TVInputManager, NetworkManager, WifiCenterManager, EthernetManager
+        │   ├── model/         <-- AppInfo, DeviceInfo, IPTVChannel, StoreApp, TVInputSource
+        │   └── ui/            <-- LauncherActivity, AppStoreActivity, IPTVPlayerActivity, SettingsActivity
         └── res/
-            ├── color/         <-- Dynamic TV focus color selectors
-            ├── drawable/      <-- Vector TV icons, focus borders, card shapes
-            ├── layout/        <-- activity_launcher, activity_iptv_player, dialog_app_details, items
-            ├── values/        <-- colors.xml, strings.xml, styles.xml
-            └── xml/           <-- file_paths.xml (FileProvider), network_security_config.xml
+            ├── drawable/      <-- Glassmorphism selectors, themes, vector icons
+            ├── layout/        <-- activity_launcher.xml, item_app_card.xml, item_iptv_channel.xml, etc.
+            └── values/        <-- colors.xml, styles.xml, strings.xml
 ```
 
 ---
 
-## 🔨 How to Build
+## ⚡ Quick ADB Installation
 
-To re-build the project from source at any time:
+From your PC connected to the same network as your TV (`172.20.10.2`):
 
-```powershell
-# Set Java Home to JDK 17
-$env:JAVA_HOME = "C:\Program Files\Microsoft\jdk-17.0.21.21-hotspot"
-$env:ANDROID_HOME = "C:\Users\Kishor\AppData\Local\Android\Sdk"
+```bash
+# 1. Connect to TV over ADB
+adb connect 172.20.10.2:5555
 
-# Compile and Assemble Release APK
-.\gradlew.bat assembleRelease
+# 2. Install VW Lite OS V4
+adb install -r d:\tvLauncherrr\VW_Lite_OS_V4.apk
 
-# Compile and Assemble Debug APK
-.\gradlew.bat assembleDebug
+# 3. Launch VW Lite OS
+adb shell am start -n com.vw.liteos/.ui.LauncherActivity
 ```
