@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Backgrounds -->
+    <color name="bg_main">#0B0E14</color>
+    <color name="bg_surface">#131822</color>
+    <color name="bg_surface_card">#1A2232</color>
+    <color name="bg_surface_card_selected">#223048</color>
+    <color name="bg_overlay">#D90A0D13</color>
+    <color name="bg_overlay_dialog">#EA0B0E14</color>
+
+    <!-- Accent & Brand -->
+    <color name="accent_cyan">#00D2FF</color>
+    <color name="accent_blue">#0078FF</color>
+    <color name="accent_gold">#FFB800</color>
+    <color name="accent_green">#00E676</color>
+    <color name="accent_red">#FF3B30</color>
+    <color name="accent_purple">#7928CA</color>
+
+    <!-- Focus Highlights -->
+    <color name="focus_border">#00D2FF</color>
+    <color name="focus_glow">#4D00D2FF</color>
+    <color name="unfocused_border">#202A3C</color>
+
+    <!-- Text -->
+    <color name="text_primary">#F0F6FC</color>
+    <color name="text_secondary">#8B949E</color>
+    <color name="text_tertiary">#484F58</color>
+    <color name="text_on_accent">#000000</color>
+
+    <!-- Status Badges -->
+    <color name="badge_system">#30363D</color>
+    <color name="badge_update">#1F6FEB</color>
+    <color name="badge_live">#DA3633</color>
+    <color name="badge_hdmi">#238636</color>
+</resources>

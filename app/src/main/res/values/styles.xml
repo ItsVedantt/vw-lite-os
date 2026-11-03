@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.VwLiteOS" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/bg_main</item>
+        <item name="android:colorBackground">@color/bg_main</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="colorPrimary">@color/accent_cyan</item>
+        <item name="colorPrimaryDark">@color/bg_main</item>
+        <item name="colorAccent">@color/accent_cyan</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimation.Fade</item>
+    </style>
+
+    <style name="Theme.VwLiteOS.Translucent" parent="Theme.VwLiteOS">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/bg_overlay_dialog</item>
+    </style>
+
+    <style name="Theme.VwLiteOS.Fullscreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="WindowAnimation.Fade" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <!-- TV Card Focus Style -->
+    <style name="TvCard">
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:background">@drawable/selector_card_bg</item>
+    </style>
+
+    <!-- TV Nav Tab Button Style -->
+    <style name="TvNavTab">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/selector_nav_tab</item>
+        <item name="android:textColor">@color/selector_nav_text</item>
+    </style>
+
+    <!-- Action Button Style -->
+    <style name="TvActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/selector_action_btn</item>
+        <item name="android:textColor">@color/selector_action_btn_text</item>
+    </style>
+</resources>

@@ -1,0 +1,126 @@
+[
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_refresh.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_refresh.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/layout_item_store_app.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/layout/item_store_app.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_selector_card_bg.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/selector_card_bg.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_bg_badge_pill.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/bg_badge_pill.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/xml_file_paths.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/xml/file_paths.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/color_selector_nav_text.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/color/selector_nav_text.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/layout_item_tv_input.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/layout/item_tv_input.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/layout_dialog_app_details.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/layout/dialog_app_details.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_hdmi.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_hdmi.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_selector_nav_tab.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/selector_nav_tab.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_launcher_vw.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_launcher_vw.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/color_selector_action_btn_text.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/color/selector_action_btn_text.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_download.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_download.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_bg_hero_card.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/bg_hero_card.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_search.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_search.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_info.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_info.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_star_filled.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_star_filled.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/layout_item_iptv_channel.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/layout/item_iptv_channel.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/xml_network_security_config.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_play.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_play.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_ethernet.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_ethernet.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/layout_activity_iptv_player.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/layout/activity_iptv_player.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/layout_activity_launcher.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/layout/activity_launcher.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_banner_vw_liteos.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/banner_vw_liteos.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/layout_item_app_card.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/layout/item_app_card.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_settings.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_star.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_star.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_wifi.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_wifi.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_ram.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_ram.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_ic_tv.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/ic_tv.xml"
+    },
+    {
+        "merged": "com.vw.liteos.app-merged_res-27:/drawable_selector_action_btn.xml.flat",
+        "source": "com.vw.liteos.app-main-29:/drawable/selector_action_btn.xml"
+    }
+]

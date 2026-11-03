@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VW Lite OS</string>
+    <string name="launcher_version">v3.0.0-lite</string>
+    <string name="tagline">Independent Lightweight Android TV Experience</string>
+
+    <!-- Nav Tabs -->
+    <string name="nav_home">Home</string>
+    <string name="nav_apps">Apps</string>
+    <string name="nav_store">Store</string>
+    <string name="nav_live_tv">Live TV</string>
+    <string name="nav_hdmi">HDMI</string>
+    <string name="nav_iptv">IPTV</string>
+    <string name="nav_network">Network</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home Sections -->
+    <string name="section_featured">Featured Application</string>
+    <string name="section_favorites">Favourite Apps</string>
+    <string name="section_recents">Recently Opened</string>
+    <string name="section_iptv_favorites">IPTV Favourites</string>
+    <string name="section_quick_inputs">TV Inputs</string>
+    <string name="empty_favorites">No favourite apps pinned yet. Long press any app in Apps tab to pin.</string>
+    <string name="empty_recents">No recently opened applications.</string>
+    <string name="empty_iptv_favorites">No favourite IPTV channels pinned yet.</string>
+
+    <!-- App Store -->
+    <string name="store_title">VW App Store</string>
+    <string name="store_subtitle">Curated TV Marketplace • F-Droid • GitHub • Verified APKs</string>
+    <string name="store_search_hint">Search applications…</string>
+    <string name="category_featured">Featured</string>
+    <string name="category_popular">Popular</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="category_streaming">Video Streaming</string>
+    <string name="category_music">Music</string>
+    <string name="category_games">Games</string>
+    <string name="category_utilities">Utilities</string>
+    <string name="category_file_managers">File Managers</string>
+    <string name="category_iptv_players">IPTV Players</string>
+    <string name="category_media_players">Media Players</string>
+    <string name="category_browsers">Browsers</string>
+    <string name="category_android_tv">Android TV</string>
+
+    <string name="btn_install">Install</string>
+    <string name="btn_update">Update</string>
+    <string name="btn_open">Open</string>
+    <string name="btn_downloading">Downloading…</string>
+    <string name="btn_verifying">Verifying…</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_uninstall">Uninstall</string>
+    <string name="btn_details">App Details</string>
+    <string name="btn_clear_cache">Clear Download Cache</string>
+    <string name="store_import_apk">Import Local APK (USB)</string>
+
+    <!-- IPTV -->
+    <string name="iptv_title">VW IPTV Player</string>
+    <string name="iptv_subtitle">Public legal live TV channels powered by iptv-org</string>
+    <string name="iptv_category_india">India</string>
+    <string name="iptv_category_news">News</string>
+    <string name="iptv_category_entertainment">Entertainment</string>
+    <string name="iptv_category_sports">Sports</string>
+    <string name="iptv_category_movies">Movies</string>
+    <string name="iptv_category_music">Music</string>
+    <string name="iptv_category_kids">Kids</string>
+    <string name="iptv_category_all">All Channels</string>
+    <string name="iptv_search_hint">Search channels…</string>
+    <string name="iptv_custom_url_hint">Enter Custom M3U / M3U8 URL</string>
+    <string name="iptv_load_custom">Load Playlist</string>
+    <string name="iptv_refresh">Refresh Playlist</string>
+    <string name="iptv_buffering">Buffering stream…</string>
+    <string name="iptv_error">Unable to play channel stream. Press BACK or choose another channel.</string>
+
+    <!-- Network -->
+    <string name="network_title">Network Center</string>
+    <string name="network_status_connected">Connected</string>
+    <string name="network_status_disconnected">Disconnected</string>
+    <string name="network_wifi">Wi-Fi</string>
+    <string name="network_ethernet">Ethernet</string>
+    <string name="network_ip">IP Address</string>
+    <string name="network_gateway">Gateway</string>
+    <string name="network_dns">DNS</string>
+    <string name="network_speed">Link Speed</string>
+    <string name="network_diagnostics">Network Diagnostics</string>
+    <string name="btn_test_connection">Test Internet Connectivity</string>
+    <string name="btn_open_wifi_settings">Open Wi-Fi Settings</string>
+    <string name="btn_open_ethernet_settings">Open Ethernet Settings</string>
+
+    <!-- TV Inputs -->
+    <string name="inputs_title">TV Input Center</string>
+    <string name="input_tuner">Live TV (Tuner)</string>
+    <string name="input_hdmi1">HDMI 1</string>
+    <string name="input_hdmi2">HDMI 2</string>
+    <string name="input_hdmi3">HDMI 3</string>
+    <string name="input_av">AV Input</string>
+
+    <!-- Settings -->
+    <string name="settings_title">VW Lite OS Settings</string>
+    <string name="settings_cat_display">Display</string>
+    <string name="settings_cat_sound">Sound</string>
+    <string name="settings_cat_network">Network</string>
+    <string name="settings_cat_apps">Applications</string>
+    <string name="settings_cat_system">System &amp; Hardware</string>
+    <string name="settings_cat_launcher">Launcher Customization</string>
+    <string name="settings_native_android">Open Native Android Settings</string>
+    <string name="settings_ram_title">System RAM (512 MB Budget)</string>
+    <string name="settings_storage_title">Internal Storage</string>
+    <string name="settings_hardware_info">Target Hardware Info</string>
+    <string name="btn_clean_ram">Free Up RAM (Trim Cache)</string>
+    <string name="btn_reset_launcher">Reset Launcher Defaults</string>
+</resources>

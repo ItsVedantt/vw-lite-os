@@ -1,0 +1,283 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.vw.liteos"
+4    android:versionCode="3"
+5    android:versionName="3.0.0-vw-liteos" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="28"
+9        android:targetSdkVersion="28" />
+10
+11    <!-- Leanback / TV Compatibility -->
+12    <uses-feature
+12-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:6:5-8:36
+13        android:name="android.software.leanback"
+13-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:7:9-49
+14        android:required="false" />
+14-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:8:9-33
+15    <uses-feature
+15-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:9:5-11:36
+16        android:name="android.hardware.touchscreen"
+16-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:10:9-52
+17        android:required="false" />
+17-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:11:9-33
+18    <uses-feature
+18-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:12:5-14:36
+19        android:name="android.hardware.telephony"
+19-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:13:9-50
+20        android:required="false" />
+20-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:14:9-33
+21    <uses-feature
+21-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:15:5-17:36
+22        android:name="android.hardware.camera"
+22-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:16:9-47
+23        android:required="false" />
+23-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:17:9-33
+24    <uses-feature
+24-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:18:5-20:36
+25        android:name="android.hardware.camera.autofocus"
+25-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:19:9-57
+26        android:required="false" />
+26-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:20:9-33
+27    <uses-feature
+27-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:21:5-23:36
+28        android:name="android.hardware.wifi"
+28-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:22:9-45
+29        android:required="false" />
+29-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:23:9-33
+30
+31    <!-- Core Permissions -->
+32    <uses-permission android:name="android.permission.INTERNET" />
+32-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:26:5-67
+32-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:26:22-64
+33    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+33-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:27:5-79
+33-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:27:22-76
+34    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+34-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:28:5-76
+34-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:28:22-73
+35    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+35-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:29:5-76
+35-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:29:22-73
+36    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+36-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:30:5-79
+36-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:30:22-76
+37    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+37-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:31:5-81
+37-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:31:22-78
+38    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+38-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:32:5-80
+38-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:32:22-77
+39    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+39-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:33:5-81
+39-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:33:22-78
+40    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+40-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:34:5-83
+40-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:34:22-80
+41    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+41-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:35:5-82
+41-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:35:22-79
+42    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+42-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:36:5-84
+42-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:36:22-81
+43    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+43-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:37:5-81
+43-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:37:22-78
+44    <uses-permission android:name="android.permission.WAKE_LOCK" />
+44-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:38:5-68
+44-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:38:22-65
+45    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+45-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:39:5-77
+45-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:39:22-74
+46
+47    <!-- TV Input / System Settings Access if available -->
+48    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+48-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:42:5-109
+48-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:42:22-70
+49
+50    <permission
+50-->[androidx.core:core:1.9.0] C:\Users\Kishor\.gradle\caches\transforms-3\8222cb7143ba57e62d848e6565915cfd\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+51        android:name="com.vw.liteos.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+51-->[androidx.core:core:1.9.0] C:\Users\Kishor\.gradle\caches\transforms-3\8222cb7143ba57e62d848e6565915cfd\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+52        android:protectionLevel="signature" />
+52-->[androidx.core:core:1.9.0] C:\Users\Kishor\.gradle\caches\transforms-3\8222cb7143ba57e62d848e6565915cfd\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+53
+54    <uses-permission android:name="com.vw.liteos.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+54-->[androidx.core:core:1.9.0] C:\Users\Kishor\.gradle\caches\transforms-3\8222cb7143ba57e62d848e6565915cfd\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+54-->[androidx.core:core:1.9.0] C:\Users\Kishor\.gradle\caches\transforms-3\8222cb7143ba57e62d848e6565915cfd\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+55
+56    <application
+56-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:44:5-123:19
+57        android:allowBackup="true"
+57-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:45:9-35
+58        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+58-->[androidx.core:core:1.9.0] C:\Users\Kishor\.gradle\caches\transforms-3\8222cb7143ba57e62d848e6565915cfd\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+59        android:banner="@drawable/banner_vw_liteos"
+59-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:48:9-52
+60        android:extractNativeLibs="false"
+61        android:hardwareAccelerated="true"
+61-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:54:9-43
+62        android:icon="@drawable/ic_launcher_vw"
+62-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:46:9-48
+63        android:label="@string/app_name"
+63-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:47:9-41
+64        android:largeHeap="true"
+64-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:55:9-33
+65        android:logo="@drawable/ic_launcher_vw"
+65-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:49:9-48
+66        android:networkSecurityConfig="@xml/network_security_config"
+66-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:53:9-69
+67        android:roundIcon="@drawable/ic_launcher_vw"
+67-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:50:9-53
+68        android:supportsRtl="true"
+68-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:51:9-35
+69        android:theme="@style/Theme.VwLiteOS" >
+69-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:52:9-46
+70
+71        <!-- Main Home Launcher Activity -->
+72        <activity
+72-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:59:9-74:20
+73            android:name="com.vw.liteos.ui.LauncherActivity"
+73-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:60:13-48
+74            android:clearTaskOnLaunch="true"
+74-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:63:13-45
+75            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+75-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:66:13-133
+76            android:exported="true"
+76-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:61:13-36
+77            android:launchMode="singleTask"
+77-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:62:13-44
+78            android:screenOrientation="landscape"
+78-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:65:13-50
+79            android:stateNotNeeded="true" >
+79-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:64:13-42
+80            <intent-filter>
+80-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:67:13-73:29
+81                <action android:name="android.intent.action.MAIN" />
+81-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:68:17-69
+81-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:68:25-66
+82
+83                <category android:name="android.intent.category.HOME" />
+83-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:69:17-73
+83-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:69:27-70
+84                <category android:name="android.intent.category.DEFAULT" />
+84-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:70:17-76
+84-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:70:27-73
+85                <category android:name="android.intent.category.LAUNCHER" />
+85-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:71:17-77
+85-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:71:27-74
+86                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+86-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:72:17-86
+86-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:72:27-83
+87            </intent-filter>
+88        </activity>
+89
+90        <!-- Built-in VW App Store Activity -->
+91        <activity
+91-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:77:9-82:65
+92            android:name="com.vw.liteos.ui.AppStoreActivity"
+92-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:78:13-48
+93            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+93-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:81:13-94
+94            android:exported="true"
+94-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:79:13-36
+95            android:screenOrientation="landscape"
+95-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:80:13-50
+96            android:theme="@style/Theme.VwLiteOS.Translucent" />
+96-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:82:13-62
+97
+98        <!-- Built-in VW IPTV Player Activity -->
+99        <activity
+99-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:85:9-90:64
+100            android:name="com.vw.liteos.ui.IPTVPlayerActivity"
+100-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:86:13-50
+101            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+101-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:89:13-94
+102            android:exported="true"
+102-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:87:13-36
+103            android:screenOrientation="landscape"
+103-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:88:13-50
+104            android:theme="@style/Theme.VwLiteOS.Fullscreen" />
+104-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:90:13-61
+105
+106        <!-- Independent System Settings Activity -->
+107        <activity
+107-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:93:9-98:65
+108            android:name="com.vw.liteos.ui.SettingsActivity"
+108-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:94:13-48
+109            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+109-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:97:13-94
+110            android:exported="true"
+110-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:95:13-36
+111            android:screenOrientation="landscape"
+111-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:96:13-50
+112            android:theme="@style/Theme.VwLiteOS.Translucent" />
+112-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:98:13-62
+113
+114        <!-- Package Change Receiver to update apps list in real-time -->
+115        <receiver
+115-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:101:9-110:20
+116            android:name="com.vw.liteos.manager.AppInstallReceiver"
+116-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:102:13-55
+117            android:exported="true" >
+117-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:103:13-36
+118            <intent-filter>
+118-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:104:13-109:29
+119                <action android:name="android.intent.action.PACKAGE_ADDED" />
+119-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:105:17-78
+119-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:105:25-75
+120                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+120-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:106:17-80
+120-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:106:25-77
+121                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+121-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:107:17-81
+121-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:107:25-78
+122
+123                <data android:scheme="package" />
+123-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:108:17-50
+123-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:108:23-47
+124            </intent-filter>
+125        </receiver>
+126
+127        <!-- Secure FileProvider for standard APK Package Installation -->
+128        <provider
+128-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:113:9-121:20
+129            android:name="androidx.core.content.FileProvider"
+129-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:114:13-62
+130            android:authorities="com.vw.liteos.fileprovider"
+130-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:115:13-61
+131            android:exported="false"
+131-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:116:13-37
+132            android:grantUriPermissions="true" >
+132-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:117:13-47
+133            <meta-data
+133-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:118:13-120:54
+134                android:name="android.support.FILE_PROVIDER_PATHS"
+134-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:119:17-67
+135                android:resource="@xml/file_paths" />
+135-->D:\tvLauncherrr\app\src\main\AndroidManifest.xml:120:17-51
+136        </provider>
+137        <provider
+137-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Kishor\.gradle\caches\transforms-3\cd9429c185a437c1c2680426049eb8fb\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+138            android:name="androidx.startup.InitializationProvider"
+138-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Kishor\.gradle\caches\transforms-3\cd9429c185a437c1c2680426049eb8fb\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+139            android:authorities="com.vw.liteos.androidx-startup"
+139-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Kishor\.gradle\caches\transforms-3\cd9429c185a437c1c2680426049eb8fb\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+140            android:exported="false" >
+140-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Kishor\.gradle\caches\transforms-3\cd9429c185a437c1c2680426049eb8fb\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+141            <meta-data
+141-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Kishor\.gradle\caches\transforms-3\cd9429c185a437c1c2680426049eb8fb\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+142                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+142-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Kishor\.gradle\caches\transforms-3\cd9429c185a437c1c2680426049eb8fb\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+143                android:value="androidx.startup" />
+143-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Kishor\.gradle\caches\transforms-3\cd9429c185a437c1c2680426049eb8fb\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+144            <meta-data
+144-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Kishor\.gradle\caches\transforms-3\1799c573ad4805bad8c8f240a170e137\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+145                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+145-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Kishor\.gradle\caches\transforms-3\1799c573ad4805bad8c8f240a170e137\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+146                android:value="androidx.startup" />
+146-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Kishor\.gradle\caches\transforms-3\1799c573ad4805bad8c8f240a170e137\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+147        </provider>
+148    </application>
+149
+150</manifest>
