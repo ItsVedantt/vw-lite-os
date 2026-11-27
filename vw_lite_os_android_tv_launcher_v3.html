@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VW Lite OS - Android TV Launcher V3</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vwDark: '#070a12',
+                        vwCard: '#111827',
+                        vwCardHover: '#1f2937',
+                        vwAccent: '#2563eb',
+                        vwAccentGlow: 'rgba(37, 99, 235, 0.4)'
+                    },
+                    boxShadow: {
+                        'vw-focus': '0 0 25px 4px rgba(37, 99, 235, 0.6), 0 0 10px rgba(255, 255, 255, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+            overflow: hidden;
+            background-color: #070a12;
+            color: #f3f4f6;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* TV Remote Focus State */
+        .tv-focusable {
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+        .tv-focusable.focused {
+            transform: scale(1.05);
+            z-index: 40;
+            box-shadow: 0 0 25px 4px rgba(37, 99, 235, 0.6), 0 0 10px rgba(255, 255, 255, 0.3);
+            border-color: #3b82f6 !important;
+            background-color: #1f2937 !important;
+        }
+        .wallpaper-bg {
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body id="vw-main-body" class="h-screen w-screen flex flex-col justify-between p-7 wallpaper-bg relative" style="background-image: linear-gradient(to bottom, rgba(7, 10, 18, 0.7), rgba(7, 10, 18, 0.95)), url('https://placehold.co/1920x1080/0f172a/2563eb?text=VW+Lite+OS+Wallpaper');">
+
+    <!-- Toast Notification Modal / Overlay -->
+    <div id="toast-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden">
+        <div class="glass-panel p-6 rounded-3xl max-w-md w-full border border-blue-500/30 shadow-2xl space-y-4 text-center">
+            <div id="toast-icon" class="w-16 h-16 rounded-2xl bg-blue-600/20 text-blue-500 mx-auto flex items-center justify-center text-3xl">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 id="toast-title" class="text-xl font-bold text-white">Notice</h3>
+            <p id="toast-message" class="text-sm text-slate-300">Message content goes here.</p>
+            <div class="pt-2">
+                <button onclick="closeToast()" class="tv-focusable px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg">OK / Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Navigation & Status Bar -->
+    <header class="flex justify-between items-center z-30">
+        <!-- OS Title & Navigation Tabs -->
+        <div class="flex items-center space-x-5">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-600/30">
+                    <i class="fa-solid fa-bolt text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">VW LITE OS</h1>
+                    <span class="text-[10px] font-semibold text-blue-400 tracking-widest uppercase">Android TV V3 (API 28)</span>
+                </div>
+            </div>
+            
+            <!-- Navigation Bar Tabs -->
+            <nav class="flex space-x-1.5 bg-slate-900/70 p-1.5 rounded-2xl border border-slate-800 backdrop-blur-md">
+                <button class="nav-tab tv-focusable px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white focus:outline-none focused" data-tab="home" onclick="switchTab('home')">
+                    <i class="fa-solid fa-house mr-1.5"></i> Home
+                </button>
+                <button class="nav-tab tv-focusable px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white focus:outline-none" data-tab="apps" onclick="switchTab('apps')">
+                    <i class="fa-solid fa-grid mr-1.5"></i> Apps
+                </button>
+                <button class="nav-tab tv-focusable px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white focus:outline-none" data-tab="store" onclick="switchTab('store')">
+                    <i class="fa-solid fa-bag-shopping mr-1.5"></i> App Store
+                </button>
+                <button class="nav-tab tv-focusable px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white focus:outline-none" data-tab="iptv" onclick="switchTab('iptv')">
+                    <i class="fa-solid fa-tv mr-1.5"></i> IPTV
+                </button>
+                <button class="nav-tab tv-focusable px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white focus:outline-none" data-tab="inputs" onclick="switchTab('inputs')">
+                    <i class="fa-solid fa-plug mr-1.5"></i> TV Inputs
+                </button>
+                <button class="nav-tab tv-focusable px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white focus:outline-none" data-tab="network" onclick="switchTab('network')">
+                    <i class="fa-solid fa-wifi mr-1.5"></i> Network
+                </button>
+                <button class="nav-tab tv-focusable px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white focus:outline-none" data-tab="settings" onclick="switchTab('settings')">
+                    <i class="fa-solid fa-gear mr-1.5"></i> Settings
+                </button>
+            </nav>
+        </div>
+
+        <!-- Status Bar (Clock, Network, RAM Monitor) -->
+        <div class="flex items-center space-x-4">
+            <!-- Memory Monitor Widget -->
+            <div class="glass-panel px-3.5 py-1.5 rounded-2xl flex items-center space-x-2 text-xs font-medium text-slate-300" title="RAM Usage on 512MB Motherboard">
+                <i class="fa-solid fa-microchip text-emerald-400"></i>
+                <span id="ram-status">RAM: 342MB / 512MB</span>
+            </div>
+            <!-- Network status -->
+            <div class="glass-panel px-3.5 py-1.5 rounded-2xl flex items-center space-x-2 text-xs font-medium text-slate-300">
+                <i class="fa-solid fa-network-wired text-blue-400"></i>
+                <span>172.20.10.2</span>
+            </div>
+            <!-- Clock -->
+            <div id="system-clock" class="text-lg font-bold tracking-tight text-white px-2">12:00 PM</div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col justify-center my-3 overflow-hidden z-20 relative">
+
+        <!-- TAB 1: HOME VIEW -->
+        <div id="view-home" class="view-section flex flex-col justify-around h-full space-y-4">
+            <!-- Featured Banner -->
+            <div class="relative w-full h-[45%] rounded-3xl overflow-hidden glass-panel border border-slate-700/60 shadow-2xl flex items-center p-8 group">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://placehold.co/1600x900/1e293b/2563eb?text=VW+Lite+OS+Cinematic+Banner');"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-vwDark via-vwDark/80 to-transparent"></div>
+                
+                <div class="relative z-10 max-w-2xl space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <span class="bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Independent OS V3</span>
+                        <span class="text-[10px] font-semibold text-slate-300 bg-slate-800/80 px-3 py-1 rounded-full">CloudTV Bypassed · ARM Mali-G31</span>
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-white tracking-tight">VW Smart TV Independent Experience</h2>
+                    <p class="text-slate-300 text-xs line-clamp-2 leading-relaxed">
+                        Welcome to VW Lite OS. Fully independent Android TV 9.0 launcher built for motherboard T.PSK518D.PB806. Enjoy zero ads, lightning-fast navigation, and full local application management.
+                    </p>
+                    <div class="flex items-center space-x-3 pt-1">
+                        <button onclick="switchTab('store')" class="tv-focusable px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-lg flex items-center space-x-2">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            <span>Explore App Store</span>
+                        </button>
+                        <button onclick="switchTab('iptv')" class="tv-focusable px-5 py-3 bg-slate-800/90 hover:bg-slate-700 text-white font-semibold text-xs rounded-xl border border-slate-700 flex items-center space-x-2">
+                            <i class="fa-solid fa-tv"></i>
+                            <span>Launch IPTV Player</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Favorite & Recent Apps Row -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center px-1">
+                    <h3 class="text-sm font-bold text-slate-200 tracking-wide">Favorite & Installed Apps</h3>
+                    <span class="text-[11px] text-slate-400 font-medium">Android API 28 Ready</span>
+                </div>
+                <div class="flex space-x-4 overflow-x-auto no-scrollbar py-2 px-1">
+                    <div onclick="showToast('YouTube TV', 'Launching YouTube TV Android package...')" class="tv-focusable flex-shrink-0 w-28 h-28 rounded-2xl glass-panel flex flex-col items-center justify-center cursor-pointer border border-slate-700/60 shadow-lg group">
+                        <div class="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center shadow-md mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-brands fa-youtube text-white text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-200">YouTube</span>
+                    </div>
+                    <div onclick="showToast('Netflix', 'Launching Netflix TV client...')" class="tv-focusable flex-shrink-0 w-28 h-28 rounded-2xl glass-panel flex flex-col items-center justify-center cursor-pointer border border-slate-700/60 shadow-lg group">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-film text-white text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-200">Netflix</span>
+                    </div>
+                    <div onclick="switchTab('iptv')" class="tv-focusable flex-shrink-0 w-28 h-28 rounded-2xl glass-panel flex flex-col items-center justify-center cursor-pointer border border-slate-700/60 shadow-lg group">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-600 flex items-center justify-center shadow-md mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-tv text-white text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-200">VW IPTV</span>
+                    </div>
+                    <div onclick="switchTab('store')" class="tv-focusable flex-shrink-0 w-28 h-28 rounded-2xl glass-panel flex flex-col items-center justify-center cursor-pointer border border-slate-700/60 shadow-lg group">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-md mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bag-shopping text-white text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-200">App Store</span>
+                    </div>
+                    <div onclick="switchTab('inputs')" class="tv-focusable flex-shrink-0 w-28 h-28 rounded-2xl glass-panel flex flex-col items-center justify-center cursor-pointer border border-slate-700/60 shadow-lg group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-600 flex items-center justify-center shadow-md mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-plug text-white text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-200">HDMI 1</span>
+                    </div>
+                    <div onclick="switchTab('network')" class="tv-focusable flex-shrink-0 w-28 h-28 rounded-2xl glass-panel flex flex-col items-center justify-center cursor-pointer border border-slate-700/60 shadow-lg group">
+                        <div class="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center shadow-md mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-wifi text-white text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-200">Network</span>
+                    </div>
+                    <div onclick="switchTab('settings')" class="tv-focusable flex-shrink-0 w-28 h-28 rounded-2xl glass-panel flex flex-col items-center justify-center cursor-pointer border border-slate-700/60 shadow-lg group">
+                        <div class="w-12 h-12 rounded-xl bg-slate-700 flex items-center justify-center shadow-md mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-gear text-white text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-200">Settings</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: APPS MANAGER VIEW -->
+        <div id="view-apps" class="view-section hidden flex flex-col h-full space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Installed Applications</h2>
+                    <p class="text-xs text-slate-400">Manage packages, uninstall or check storage (ARM Android 9)</p>
+                </div>
+                <button onclick="switchTab('store')" class="tv-focusable px-4 py-2 bg-blue-600 text-white font-semibold rounded-xl text-xs">
+                    <i class="fa-solid fa-plus mr-1.5"></i> Install More Apps
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-4 overflow-y-auto no-scrollbar max-h-[58vh] p-1">
+                <div class="tv-focusable p-4 rounded-2xl glass-panel flex items-center justify-between border border-slate-700/60">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center text-white text-xl"><i class="fa-brands fa-youtube"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">YouTube TV</h4>
+                            <p class="text-[10px] text-slate-400">v18.20.1 · 45 MB</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('YouTube TV', 'App is system-managed and active.')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-xs font-semibold rounded-lg text-slate-200">Open</button>
+                </div>
+                <div class="tv-focusable p-4 rounded-2xl glass-panel flex items-center justify-between border border-slate-700/60">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-xl"><i class="fa-solid fa-film"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Netflix</h4>
+                            <p class="text-[10px] text-slate-400">v9.1.0 · 32 MB</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('Netflix', 'App is active.')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-xs font-semibold rounded-lg text-slate-200">Open</button>
+                </div>
+                <div class="tv-focusable p-4 rounded-2xl glass-panel flex items-center justify-between border border-slate-700/60">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-600 flex items-center justify-center text-white text-xl"><i class="fa-solid fa-tv"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">VW IPTV Player</h4>
+                            <p class="text-[10px] text-slate-400">v3.0.0 · 18 MB</p>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('iptv')" class="tv-focusable px-3 py-1.5 bg-blue-600 text-xs font-semibold rounded-lg text-white">Open</button>
+                </div>
+                <div class="tv-focusable p-4 rounded-2xl glass-panel flex items-center justify-between border border-slate-700/60">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-xl bg-sky-500 flex items-center justify-center text-white text-xl"><i class="fa-solid fa-play"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Prime Video</h4>
+                            <p class="text-[10px] text-slate-400">v5.4.2 · 41 MB</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('Prime Video', 'Opening Prime Video...')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-xs font-semibold rounded-lg text-slate-200">Open</button>
+                </div>
+                <div class="tv-focusable p-4 rounded-2xl glass-panel flex items-center justify-between border border-slate-700/60">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500 flex items-center justify-center text-white text-xl"><i class="fa-solid fa-music"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Spotify TV</h4>
+                            <p class="text-[10px] text-slate-400">v4.8.0 · 29 MB</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('Spotify', 'Opening Spotify...')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-xs font-semibold rounded-lg text-slate-200">Open</button>
+                </div>
+                <div class="tv-focusable p-4 rounded-2xl glass-panel flex items-center justify-between border border-slate-700/60">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center text-white text-xl"><i class="fa-solid fa-folder-open"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">File Manager</h4>
+                            <p class="text-[10px] text-slate-400">v2.1.0 · 12 MB</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('File Manager', 'Opening APK Installer & File Manager...')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-xs font-semibold rounded-lg text-slate-200">Open</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: APP STORE VIEW -->
+        <div id="view-store" class="view-section hidden flex flex-col h-full space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">VW App Store Marketplace</h2>
+                    <p class="text-xs text-slate-400">Direct APK downloads, F-Droid & GitHub verified Android TV packages</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="filterStore('all')" class="tv-focusable px-3 py-1.5 bg-blue-600 text-white font-semibold rounded-xl text-xs">All</button>
+                    <button onclick="filterStore('streaming')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs">Streaming</button>
+                    <button onclick="filterStore('utility')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs">Utilities</button>
+                    <button onclick="filterStore('player')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs">Media Players</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 overflow-y-auto no-scrollbar max-h-[58vh] p-1" id="store-app-grid">
+                <!-- App Item 1 -->
+                <div class="store-item tv-focusable p-5 rounded-2xl glass-panel flex flex-col justify-between border border-slate-700/60" data-category="player">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl bg-orange-600 flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-md">
+                            <i class="fa-solid fa-cube"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">SmartTube Next</h4>
+                            <p class="text-[11px] text-blue-400 font-medium">GitHub Official · Ad-free YouTube TV client</p>
+                            <p class="text-[10px] text-slate-400 mt-1">v17.5 · ARMv7/ARM64 · 14.2 MB</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 mt-2 border-t border-slate-800">
+                        <span class="text-[10px] text-emerald-400 font-semibold"><i class="fa-solid fa-shield-check mr-1"></i>Verified APK</span>
+                        <button onclick="installApp('SmartTube Next', '14.2 MB')" class="tv-focusable px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md">Install APK</button>
+                    </div>
+                </div>
+                <!-- App Item 2 -->
+                <div class="store-item tv-focusable p-5 rounded-2xl glass-panel flex flex-col justify-between border border-slate-700/60" data-category="player">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-600 flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-md">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">VLC for Android TV</h4>
+                            <p class="text-[11px] text-blue-400 font-medium">Official Video LAN · Media Player</p>
+                            <p class="text-[10px] text-slate-400 mt-1">v3.5.4 · ARMv7/ARM64 · 38.5 MB</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 mt-2 border-t border-slate-800">
+                        <span class="text-[10px] text-emerald-400 font-semibold"><i class="fa-solid fa-shield-check mr-1"></i>Verified APK</span>
+                        <button onclick="installApp('VLC for Android TV', '38.5 MB')" class="tv-focusable px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md">Install APK</button>
+                    </div>
+                </div>
+                <!-- App Item 3 -->
+                <div class="store-item tv-focusable p-5 rounded-2xl glass-panel flex flex-col justify-between border border-slate-700/60" data-category="utility">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-600 flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-md">
+                            <i class="fa-solid fa-download"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">Downloader by AFTVnews</h4>
+                            <p class="text-[11px] text-blue-400 font-medium">Official Utility · Web & APK Browser</p>
+                            <p class="text-[10px] text-slate-400 mt-1">v1.6.0 · ARMv7/ARM64 · 10.1 MB</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 mt-2 border-t border-slate-800">
+                        <span class="text-[10px] text-emerald-400 font-semibold"><i class="fa-solid fa-shield-check mr-1"></i>Verified APK</span>
+                        <button onclick="installApp('Downloader by AFTVnews', '10.1 MB')" class="tv-focusable px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md">Install APK</button>
+                    </div>
+                </div>
+                <!-- App Item 4 -->
+                <div class="store-item tv-focusable p-5 rounded-2xl glass-panel flex flex-col justify-between border border-slate-700/60" data-category="streaming">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-md">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">JioCinema TV</h4>
+                            <p class="text-[11px] text-blue-400 font-medium">Official Developer · Streaming</p>
+                            <p class="text-[10px] text-slate-400 mt-1">v3.2.1 · ARMv7/ARM64 · 26.4 MB</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 mt-2 border-t border-slate-800">
+                        <span class="text-[10px] text-emerald-400 font-semibold"><i class="fa-solid fa-shield-check mr-1"></i>Verified APK</span>
+                        <button onclick="installApp('JioCinema TV', '26.4 MB')" class="tv-focusable px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md">Install APK</button>
+                    </div>
+                </div>
+                <!-- App Item 5 -->
+                <div class="store-item tv-focusable p-5 rounded-2xl glass-panel flex flex-col justify-between border border-slate-700/60" data-category="streaming">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl bg-rose-600 flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-md">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">Disney+ Hotstar TV</h4>
+                            <p class="text-[11px] text-blue-400 font-medium">Official Developer · Streaming</p>
+                            <p class="text-[10px] text-slate-400 mt-1">v4.1.0 · ARMv7/ARM64 · 34.0 MB</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 mt-2 border-t border-slate-800">
+                        <span class="text-[10px] text-emerald-400 font-semibold"><i class="fa-solid fa-shield-check mr-1"></i>Verified APK</span>
+                        <button onclick="installApp('Disney+ Hotstar TV', '34.0 MB')" class="tv-focusable px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md">Install APK</button>
+                    </div>
+                </div>
+                <!-- App Item 6 -->
+                <div class="store-item tv-focusable p-5 rounded-2xl glass-panel flex flex-col justify-between border border-slate-700/60" data-category="utility">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-500 flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-md">
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">Send Files to TV (SFTV)</h4>
+                            <p class="text-[11px] text-blue-400 font-medium">Official F-Droid · File Transfer</p>
+                            <p class="text-[10px] text-slate-400 mt-1">v1.2.5 · ARMv7/ARM64 · 8.3 MB</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 mt-2 border-t border-slate-800">
+                        <span class="text-[10px] text-emerald-400 font-semibold"><i class="fa-solid fa-shield-check mr-1"></i>Verified APK</span>
+                        <button onclick="installApp('Send Files to TV', '8.3 MB')" class="tv-focusable px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md">Install APK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: BUILT-IN IPTV PLAYER VIEW -->
+        <div id="view-iptv" class="view-section hidden flex flex-col h-full space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">VW IPTV Player</h2>
+                    <p class="text-xs text-slate-400">Powered by iptv-org M3U Playlist & ExoPlayer Android 9 engine</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button onclick="loadIPTVCategory('india')" class="tv-focusable px-3 py-1.5 bg-blue-600 text-white font-semibold rounded-xl text-xs">🇮🇳 India Channels</button>
+                    <button onclick="loadIPTVCategory('news')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs">📰 News</button>
+                    <button onclick="loadIPTVCategory('sports')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs">⚽ Sports</button>
+                    <button onclick="loadIPTVCategory('movies')" class="tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs">🍿 Movies</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 h-[58vh]">
+                <!-- Channel List -->
+                <div class="col-span-1 glass-panel rounded-2xl p-4 flex flex-col space-y-3 overflow-y-auto no-scrollbar border border-slate-700/60">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider" id="iptv-category-title">India Channels (Live)</span>
+                        <span class="text-[10px] text-emerald-400 font-semibold">12 Active Streams</span>
+                    </div>
+                    <div class="space-y-2" id="channel-list-container">
+                        <div onclick="playChannel('NDTV 24x7', 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', 'News & Info')" class="tv-focusable p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between cursor-pointer">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-red-600/20 text-red-500 flex items-center justify-center font-bold text-xs">NDTV</div>
+                                <div>
+                                    <h4 class="font-bold text-white text-xs">NDTV 24x7</h4>
+                                    <p class="text-[10px] text-slate-400">Live HD · 1080p</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-play text-xs text-blue-400"></i>
+                        </div>
+                        <div onclick="playChannel('Republic World', 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', 'News & Info')" class="tv-focusable p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between cursor-pointer">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-600/20 text-blue-500 flex items-center justify-center font-bold text-xs">REP</div>
+                                <div>
+                                    <h4 class="font-bold text-white text-xs">Republic World</h4>
+                                    <p class="text-[10px] text-slate-400">Live HD · 1080p</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-play text-xs text-slate-500"></i>
+                        </div>
+                        <div onclick="playChannel('Sports 18 Live', 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', 'Sports')" class="tv-focusable p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between cursor-pointer">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-600/20 text-emerald-500 flex items-center justify-center font-bold text-xs">S18</div>
+                                <div>
+                                    <h4 class="font-bold text-white text-xs">Sports 18 Live</h4>
+                                    <p class="text-[10px] text-slate-400">Live Sports · 60fps</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-play text-xs text-slate-500"></i>
+                        </div>
+                        <div onclick="playChannel('Sony Max India', 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', 'Movies')" class="tv-focusable p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between cursor-pointer">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-purple-600/20 text-purple-500 flex items-center justify-center font-bold text-xs">MAX</div>
+                                <div>
+                                    <h4 class="font-bold text-white text-xs">Sony Max India</h4>
+                                    <p class="text-[10px] text-slate-400">Cinema · HD</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-play text-xs text-slate-500"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Player Screen -->
+                <div class="col-span-2 glass-panel rounded-2xl overflow-hidden relative flex flex-col justify-between border border-slate-700/60 p-6 bg-gradient-to-br from-slate-900 to-black">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://placehold.co/1200x700/0f172a/2563eb?text=IPTV+Player+Stream');"></div>
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    
+                    <!-- Player Header Info -->
+                    <div class="relative z-10 flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></span>
+                            <span id="now-playing-title" class="text-sm font-bold text-white">NDTV 24x7 (Live Stream)</span>
+                        </div>
+                        <span class="text-[10px] bg-blue-600/80 text-white px-2.5 py-1 rounded-full font-semibold">ExoPlayer Android 9</span>
+                    </div>
+
+                    <!-- Center Play Mock / Video Element -->
+                    <div class="relative z-10 flex flex-col items-center justify-center space-y-3 my-auto">
+                        <div class="w-20 h-20 rounded-full bg-blue-600/80 backdrop-blur-md flex items-center justify-center text-white text-3xl shadow-xl shadow-blue-600/40">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </div>
+                        <span id="now-playing-category" class="text-xs text-slate-300 font-medium">Category: News & Info</span>
+                    </div>
+
+                    <!-- Player Footer Controls -->
+                    <div class="relative z-10 flex justify-between items-center pt-3 border-t border-slate-800/80">
+                        <div class="flex items-center space-x-3">
+                            <button onclick="showToast('IPTV', 'Switched to previous channel')" class="tv-focusable px-3 py-1.5 bg-slate-800 rounded-lg text-xs text-white font-semibold"><i class="fa-solid fa-backward-step mr-1"></i> Prev</button>
+                            <button onclick="showToast('IPTV', 'Switched to next channel')" class="tv-focusable px-3 py-1.5 bg-slate-800 rounded-lg text-xs text-white font-semibold">Next <i class="fa-solid fa-forward-step ml-1"></i></button>
+                        </div>
+                        <div class="text-[11px] text-slate-400">
+                            M3U Playlist Loaded · XMLTV EPG Active
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: TV INPUT CENTER -->
+        <div id="view-inputs" class="view-section hidden flex flex-col h-full space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-white">TV Input Center</h2>
+                <p class="text-xs text-slate-400">Manage hardware inputs, Live TV Tuner & HDMI switching through Android TV Input Framework</p>
+            </div>
+
+            <div class="grid grid-cols-4 gap-5">
+                <div onclick="switchInput('Live TV Tuner')" class="tv-focusable p-6 rounded-2xl glass-panel flex flex-col items-center justify-center space-y-3 cursor-pointer border border-slate-700/60 shadow-lg group">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-tv"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">Live TV Tuner</h4>
+                    <span class="text-[10px] text-slate-400">RF Broadcast Antenna</span>
+                </div>
+                <div onclick="switchInput('HDMI 1')" class="tv-focusable p-6 rounded-2xl glass-panel flex flex-col items-center justify-center space-y-3 cursor-pointer border border-slate-700/60 shadow-lg group">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-plug"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">HDMI 1</h4>
+                    <span class="text-[10px] text-slate-400">Set-Top Box / FireStick</span>
+                </div>
+                <div onclick="switchInput('HDMI 2')" class="tv-focusable p-6 rounded-2xl glass-panel flex flex-col items-center justify-center space-y-3 cursor-pointer border border-slate-700/60 shadow-lg group">
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">HDMI 2</h4>
+                    <span class="text-[10px] text-slate-400">PlayStation / Console</span>
+                </div>
+                <div onclick="switchInput('AV Composite')" class="tv-focusable p-6 rounded-2xl glass-panel flex flex-col items-center justify-center space-y-3 cursor-pointer border border-slate-700/60 shadow-lg group">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-600/20 text-amber-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">AV Composite</h4>
+                    <span class="text-[10px] text-slate-400">Legacy Audio/Video</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: NETWORK CENTER -->
+        <div id="view-network" class="view-section hidden flex flex-col h-full space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-white">Network Center</h2>
+                <p class="text-xs text-slate-400">Manage Wi-Fi discovery, Ethernet status & internet diagnostics (Motherboard T.PSK518D)</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-5">
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border border-slate-700/60">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-xl"><i class="fa-solid fa-wifi"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Wi-Fi Connection</h4>
+                                <p class="text-xs text-slate-400">Connected to Home_5G_Fiber</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-400 bg-emerald-600/20 px-3 py-1 rounded-full">Connected</span>
+                    </div>
+                    <div class="space-y-2 pt-2">
+                        <button onclick="showToast('Wi-Fi', 'Scanning for nearby access points via Android Wi-Fi API...')" class="tv-focusable w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md">Scan Available Networks</button>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border border-slate-700/60">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl"><i class="fa-solid fa-network-wired"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Ethernet IP & Diagnostics</h4>
+                                <p class="text-xs text-slate-400">IP: 172.20.10.2 · GW: 172.20.10.1</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-400 bg-emerald-600/20 px-3 py-1 rounded-full">Active</span>
+                    </div>
+                    <div class="space-y-2 pt-2">
+                        <button onclick="showToast('Network Test', 'Ping test successful (14ms latency to gateway).')" class="tv-focusable w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs rounded-xl border border-slate-700">Run Internet Connectivity Test</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 7: SYSTEM SETTINGS -->
+        <div id="view-settings" class="view-section hidden flex flex-col h-full space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">VW Lite OS Settings</h2>
+                    <p class="text-xs text-slate-400">Display themes, wallpapers, launcher preferences, Developer Options, Smart Startup & IPTV Auto-Resume</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="switchSettingsSub('general')" id="btn-settings-general" class="tv-focusable px-3 py-1.5 bg-blue-600 text-white font-semibold rounded-xl text-xs">General</button>
+                    <button onclick="switchSettingsSub('startup')" id="btn-settings-startup" class="tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs">Startup & Playback</button>
+                    <button onclick="switchSettingsSub('developer')" id="btn-settings-developer" class="tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs">Developer Options</button>
+                </div>
+            </div>
+
+            <!-- General Settings Sub-View -->
+            <div id="settings-sub-general" class="grid grid-cols-2 gap-5 max-h-[58vh] overflow-y-auto no-scrollbar p-1">
+                <div class="tv-focusable p-5 rounded-2xl glass-panel flex items-center justify-between cursor-pointer border border-slate-700/60">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-xl"><i class="fa-solid fa-display"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">Display & Resolution</h4>
+                            <p class="text-xs text-slate-400">1080p 60Hz · Mali-G31 GPU Acceleration</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+                <div class="tv-focusable p-5 rounded-2xl glass-panel flex items-center justify-between cursor-pointer border border-slate-700/60">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl"><i class="fa-solid fa-volume-high"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">Sound & Audio Output</h4>
+                            <p class="text-xs text-slate-400">Dolby Digital Plus · TV Speakers</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+                <!-- Wallpaper Customization Setting Card -->
+                <div class="tv-focusable p-5 rounded-2xl glass-panel flex flex-col justify-between cursor-pointer border border-slate-700/60 col-span-2 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-pink-600/20 text-pink-400 flex items-center justify-center text-xl"><i class="fa-solid fa-image"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Launcher Wallpaper Theme</h4>
+                                <p class="text-xs text-slate-400">Select background wallpaper for VW Lite OS</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-bold text-blue-400 bg-blue-600/20 px-3 py-1 rounded-full">Custom Theme</span>
+                    </div>
+                    <div class="grid grid-cols-4 gap-3 pt-2">
+                        <div onclick="setWallpaper('https://placehold.co/1920x1080/0f172a/2563eb?text=Midnight+Blue')" class="tv-focusable h-16 rounded-xl overflow-hidden border-2 border-slate-700 relative flex items-center justify-center text-xs font-semibold text-white bg-blue-900 cursor-pointer">Midnight Blue</div>
+                        <div onclick="setWallpaper('https://placehold.co/1920x1080/18181b/ef4444?text=Cyber+Neon')" class="tv-focusable h-16 rounded-xl overflow-hidden border-2 border-slate-700 relative flex items-center justify-center text-xs font-semibold text-white bg-zinc-900 cursor-pointer">Cyber Neon</div>
+                        <div onclick="setWallpaper('https://placehold.co/1920x1080/065f46/10b981?text=Emerald+Forest')" class="tv-focusable h-16 rounded-xl overflow-hidden border-2 border-slate-700 relative flex items-center justify-center text-xs font-semibold text-white bg-emerald-900 cursor-pointer">Emerald Forest</div>
+                        <div onclick="setWallpaper('https://placehold.co/1920x1080/581c87/a855f7?text=Cosmic+Purple')" class="tv-focusable h-16 rounded-xl overflow-hidden border-2 border-slate-700 relative flex items-center justify-center text-xs font-semibold text-white bg-purple-900 cursor-pointer">Cosmic Purple</div>
+                    </div>
+                </div>
+                <div class="tv-focusable p-5 rounded-2xl glass-panel flex items-center justify-between cursor-pointer border border-slate-700/60">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-600/20 text-amber-400 flex items-center justify-center text-xl"><i class="fa-solid fa-circle-info"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">Device & Firmware Info</h4>
+                            <p class="text-xs text-slate-400">Android 9 · API 28 · Firmware 20260227</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+                <div class="tv-focusable p-5 rounded-2xl glass-panel flex items-center justify-between cursor-pointer border border-slate-700/60" onclick="showToast('CloudTV Recovery', 'CloudTV original launcher remains installed as secure backup.')">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-xl"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">Original Launcher Recovery</h4>
+                            <p class="text-xs text-slate-400">CloudTV backup is preserved intact</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-600/20 px-2.5 py-1 rounded-full">Safe</span>
+                </div>
+            </div>
+
+            <!-- Startup & Playback Settings Sub-View (NEW FEATURE) -->
+            <div id="settings-sub-startup" class="hidden flex flex-col space-y-4 max-h-[58vh] overflow-y-auto no-scrollbar p-1">
+                <!-- Startup Destination Card -->
+                <div class="glass-panel p-5 rounded-2xl border border-slate-700/60 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-power-off"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Default Startup Destination</h4>
+                                <p class="text-[10px] text-slate-400">Select which section opens automatically when VW Lite OS starts</p>
+                            </div>
+                        </div>
+                        <select id="startup-destination-select" onchange="saveStartupPreferences()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 outline-none font-medium">
+                            <option value="home">1. Home Dashboard</option>
+                            <option value="iptv" selected>2. IPTV Player (Default)</option>
+                            <option value="iptv-guide">3. IPTV Channel Guide</option>
+                            <option value="inputs">4. Live TV / HDMI Input</option>
+                            <option value="apps">5. Applications</option>
+                            <option value="store">6. App Store</option>
+                            <option value="network">7. Network Center</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- IPTV Auto Resume & Playback Behavior Card -->
+                <div class="glass-panel p-5 rounded-2xl border border-slate-700/60 space-y-4">
+                    <h3 class="text-xs font-bold text-slate-200 tracking-wide uppercase">IPTV Auto-Resume & Session Manager</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="tv-focusable flex items-center justify-between p-3 rounded-xl bg-slate-900/80 border border-slate-800 cursor-pointer">
+                            <span class="text-xs text-slate-300 font-medium">Enable Auto-Resume IPTV</span>
+                            <input type="checkbox" id="pref-auto-resume" checked onchange="saveStartupPreferences()" class="w-4 h-4 accent-blue-600 rounded">
+                        </label>
+                        <label class="tv-focusable flex items-center justify-between p-3 rounded-xl bg-slate-900/80 border border-slate-800 cursor-pointer">
+                            <span class="text-xs text-slate-300 font-medium">Auto-Play Last Channel</span>
+                            <input type="checkbox" id="pref-auto-play" checked onchange="saveStartupPreferences()" class="w-4 h-4 accent-blue-600 rounded">
+                        </label>
+                        <label class="tv-focusable flex items-center justify-between p-3 rounded-xl bg-slate-900/80 border border-slate-800 cursor-pointer">
+                            <span class="text-xs text-slate-300 font-medium">Network Reconnect Check</span>
+                            <input type="checkbox" id="pref-net-reconnect" checked onchange="saveStartupPreferences()" class="w-4 h-4 accent-blue-600 rounded">
+                        </label>
+                        <label class="tv-focusable flex items-center justify-between p-3 rounded-xl bg-slate-900/80 border border-slate-800 cursor-pointer">
+                            <span class="text-xs text-slate-300 font-medium">Restore Aspect Ratio</span>
+                            <input type="checkbox" id="pref-aspect" checked onchange="saveStartupPreferences()" class="w-4 h-4 accent-blue-600 rounded">
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+                        <div>
+                            <span class="text-[11px] font-bold text-white block">Startup Delay (Network Sync)</span>
+                            <span class="text-[10px] text-slate-400">Allows Wi-Fi/Ethernet (`172.20.10.2`) to initialize before streaming</span>
+                        </div>
+                        <select id="startup-delay-select" onchange="saveStartupPreferences()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 outline-none">
+                            <option value="0">Immediately</option>
+                            <option value="3" selected>3 Seconds</option>
+                            <option value="5">5 Seconds</option>
+                            <option value="10">10 Seconds</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Session History & Preview Controls -->
+                <div class="glass-panel p-5 rounded-2xl border border-slate-700/60 space-y-3">
+                    <h3 class="text-xs font-bold text-slate-200 tracking-wide uppercase">Active Session Summary</h3>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs space-y-1 font-mono text-slate-300">
+                        <div>Last Player: <span id="sess-player" class="text-blue-400">VW IPTV Player (Built-in ExoPlayer)</span></div>
+                        <div>Last Playlist: <span id="sess-playlist" class="text-emerald-400">iptv-org / India Channels (Public M3U)</span></div>
+                        <div>Last Channel: <span id="sess-channel" class="text-amber-400">NDTV 24x7 (Live HD)</span></div>
+                        <div>Last IP: <span class="text-purple-400">172.20.10.2</span></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 pt-1">
+                        <button onclick="previewStartupBehavior()" class="tv-focusable py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs text-center shadow-md">Preview Startup Behavior</button>
+                        <button onclick="resetPlaybackHistory()" class="tv-focusable py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl text-xs border border-slate-700 text-center">Clear History & Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Developer Options Sub-View -->
+            <div id="settings-sub-developer" class="hidden flex flex-col space-y-4 max-h-[58vh] overflow-y-auto no-scrollbar p-1">
+                <!-- Developer Mode Master Card -->
+                <div class="glass-panel p-5 rounded-2xl border border-slate-700/60 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Developer Mode (Android 9 API 28)</h4>
+                                <p class="text-xs text-slate-300">Enables USB Debugging, ADB over TCP, and system diagnostic inspection for motherboard T.PSK518D.</p>
+                            </div>
+                        </div>
+                        <!-- Large TV Toggle Switch -->
+                        <div onclick="toggleDeveloperMode()" id="dev-mode-toggle-box" class="tv-focusable w-20 h-10 rounded-full bg-slate-800 p-1 cursor-pointer flex items-center transition-colors duration-300 border border-slate-700">
+                            <div id="dev-mode-thumb" class="w-8 h-8 rounded-full bg-slate-400 shadow-md transform transition-transform duration-300"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-3 border-t border-slate-800 text-xs">
+                        <span class="text-slate-400">Status Indicator: <strong id="dev-status-text" class="text-amber-400">Disabled (Restricted by OS)</strong></span>
+                        <span class="text-slate-500 font-mono">Settings.Global.DEVELOPMENT_SETTINGS_ENABLED</span>
+                    </div>
+                </div>
+
+                <!-- ADB Debugging & Network Section -->
+                <div class="glass-panel p-5 rounded-2xl border border-slate-700/60 space-y-3">
+                    <h3 class="text-sm font-bold text-slate-200 tracking-wide uppercase">ADB Debugging & Connection</h3>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <span class="text-[10px] text-slate-400 block">USB Debugging</span>
+                            <span id="adb-usb-status" class="text-xs font-bold text-rose-400">Disabled</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <span class="text-[10px] text-slate-400 block">TV IP Address</span>
+                            <span class="text-xs font-bold text-blue-400">172.20.10.2</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <span class="text-[10px] text-slate-400 block">ADB Network Status</span>
+                            <span id="adb-net-status" class="text-xs font-bold text-amber-400">Unavailable / Port 5555</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 pt-2">
+                        <button onclick="showToast('Native Settings', 'Opening Android TV native Developer Settings...')" class="tv-focusable py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl text-xs border border-slate-700 text-center">Open Dev Settings</button>
+                        <button onclick="showToast('USB Debugging', 'Opening USB Debugging configuration menu...')" class="tv-focusable py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl text-xs border border-slate-700 text-center">USB Debugging</button>
+                        <button onclick="copyTvIp()" class="tv-focusable py-2.5 px-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs text-center">Copy TV IP (172.20.10.2)</button>
+                    </div>
+                </div>
+
+                <!-- Additional Developer Shortcuts -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div onclick="showToast('Running Services', 'Inspection: 14 background packages active. RAM usage: 342MB / 512MB.')" class="tv-focusable p-4 rounded-xl glass-panel flex items-center justify-between cursor-pointer border border-slate-700/60">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-microchip text-emerald-400 text-lg"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-xs">Running Services & RAM</h4>
+                                <p class="text-[10px] text-slate-400">Inspect background memory usage</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                    </div>
+                    <div onclick="showToast('GPU Profiling', 'Mali-G31 MP2 Hardware Renderer: HW UI rendering enabled.')" class="tv-focusable p-4 rounded-xl glass-panel flex items-center justify-between cursor-pointer border border-slate-700/60">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-gauge-high text-blue-400 text-lg"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-xs">GPU Rendering Info</h4>
+                                <p class="text-[10px] text-slate-400">Mali-G31 MP2 hardware stats</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Remote Control Helper Footer -->
+    <footer class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-slate-800/80 z-30">
+        <div class="flex items-center space-x-5">
+            <span class="flex items-center space-x-1.5">
+                <kbd class="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-white font-mono text-[10px]">Arrow Keys</kbd>
+                <span>D-Pad Navigate</span>
+            </span>
+            <span class="flex items-center space-x-1.5">
+                <kbd class="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-white font-mono text-[10px]">Enter / OK</kbd>
+                <span>Select</span>
+            </span>
+            <span class="flex items-center space-x-1.5">
+                <kbd class="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-white font-mono text-[10px]">Tab</kbd>
+                <span>Switch Views</span>
+            </span>
+        </div>
+        <div class="font-medium text-slate-500 text-[11px]">
+            VW Lite OS V3 · Package: com.vw.liteos · 512MB RAM Optimized
+        </div>
+    </footer>
+
+    <!-- Interactive TV Launcher Script -->
+    <script>
+        // System Clock
+        function updateClock() {
+            const now = new Date();
+            let h = now.getHours();
+            let m = now.getMinutes().toString().padStart(2, '0');
+            let ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12;
+            document.getElementById('system-clock').innerText = `${h}:${m} ${ampm}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Persistent PlaybackSessionManager state simulation
+        let playbackSession = {
+            startup_destination: 'iptv',
+            auto_resume_enabled: true,
+            auto_play_enabled: true,
+            net_reconnect: true,
+            restore_aspect: true,
+            startup_delay: 3,
+            last_player_package: 'com.vw.liteos.iptv',
+            last_playlist_name: 'India Channels (iptv-org)',
+            last_channel_name: 'NDTV 24x7',
+            last_stream_url: 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+            last_category: 'News & Info'
+        };
+
+        // Load saved preferences on boot
+        function loadStartupPreferences() {
+            const saved = localStorage.getItem('vw_lite_os_session');
+            if (saved) {
+                try {
+                    playbackSession = JSON.parse(saved);
+                    document.getElementById('startup-destination-select').value = playbackSession.startup_destination || 'iptv';
+                    document.getElementById('pref-auto-resume').checked = playbackSession.auto_resume_enabled;
+                    document.getElementById('pref-auto-play').checked = playbackSession.auto_play_enabled;
+                    document.getElementById('pref-net-reconnect').checked = playbackSession.net_reconnect;
+                    document.getElementById('pref-aspect').checked = playbackSession.restore_aspect;
+                    document.getElementById('startup-delay-select').value = playbackSession.startup_delay || 3;
+                } catch(e) { console.error(e); }
+            }
+            updateSessionDisplay();
+        }
+
+        function saveStartupPreferences() {
+            playbackSession.startup_destination = document.getElementById('startup-destination-select').value;
+            playbackSession.auto_resume_enabled = document.getElementById('pref-auto-resume').checked;
+            playbackSession.auto_play_enabled = document.getElementById('pref-auto-play').checked;
+            playbackSession.net_reconnect = document.getElementById('pref-net-reconnect').checked;
+            playbackSession.restore_aspect = document.getElementById('pref-aspect').checked;
+            playbackSession.startup_delay = parseInt(document.getElementById('startup-delay-select').value);
+
+            localStorage.setItem('vw_lite_os_session', JSON.stringify(playbackSession));
+            showToast('Startup Saved', 'Startup & playback preferences saved to persistent storage.');
+        }
+
+        function updateSessionDisplay() {
+            document.getElementById('sess-player').innerText = playbackSession.last_player_package;
+            document.getElementById('sess-playlist').innerText = playbackSession.last_playlist_name;
+            document.getElementById('sess-channel').innerText = playbackSession.last_channel_name;
+        }
+
+        function previewStartupBehavior() {
+            const dest = playbackSession.startup_destination;
+            let destName = 'Home Dashboard';
+            if (dest === 'iptv') destName = `IPTV Player (Auto-resume: ${playbackSession.last_channel_name})`;
+            else if (dest === 'iptv-guide') destName = 'IPTV Channel Guide';
+            else if (dest === 'inputs') destName = 'Live TV / HDMI Input';
+            else if (dest === 'apps') destName = 'Applications Manager';
+            else if (dest === 'store') destName = 'VW App Store';
+            else if (dest === 'network') destName = 'Network Center';
+
+            showToast('Startup Simulation', `On TV Boot (${playbackSession.startup_delay}s delay):\n1. Verifying Wi-Fi / Ethernet (172.20.10.2)\n2. Launching destination: ${destName}\n3. Network-aware stream verification active.`);
+        }
+
+        function resetPlaybackHistory() {
+            localStorage.removeItem('vw_lite_os_session');
+            showToast('Session Reset', 'Playback history and custom startup preferences have been reset to defaults.');
+            loadStartupPreferences();
+        }
+
+        // Toast Modal Handler (replaces alert)
+        function showToast(title, message) {
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-message').innerText = message;
+            document.getElementById('toast-modal').classList.remove('hidden');
+        }
+        function closeToast() {
+            document.getElementById('toast-modal').classList.add('hidden');
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('focused', 'bg-blue-600', 'text-white');
+                btn.classList.add('text-slate-300');
+            });
+            const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('focused');
+            }
+            initFocus();
+        }
+
+        // Wallpaper Customizer
+        function setWallpaper(url) {
+            document.getElementById('vw-main-body').style.backgroundImage = `linear-gradient(to bottom, rgba(7, 10, 18, 0.7), rgba(7, 10, 18, 0.95)), url('${url}')`;
+            showToast('Wallpaper Updated', 'New theme applied successfully.');
+        }
+
+        // Settings Sub-tabs Switching
+        function switchSettingsSub(sub) {
+            const genSub = document.getElementById('settings-sub-general');
+            const startupSub = document.getElementById('settings-sub-startup');
+            const devSub = document.getElementById('settings-sub-developer');
+            const btnGen = document.getElementById('btn-settings-general');
+            const btnStartup = document.getElementById('btn-settings-startup');
+            const btnDev = document.getElementById('btn-settings-developer');
+
+            genSub.classList.add('hidden');
+            startupSub.classList.add('hidden');
+            devSub.classList.add('hidden');
+            btnGen.className = 'tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs';
+            btnStartup.className = 'tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs';
+            btnDev.className = 'tv-focusable px-3 py-1.5 bg-slate-800 text-slate-200 font-semibold rounded-xl text-xs';
+
+            if (sub === 'general') {
+                genSub.classList.remove('hidden');
+                btnGen.className = 'tv-focusable px-3 py-1.5 bg-blue-600 text-white font-semibold rounded-xl text-xs';
+            } else if (sub === 'startup') {
+                startupSub.classList.remove('hidden');
+                btnStartup.className = 'tv-focusable px-3 py-1.5 bg-blue-600 text-white font-semibold rounded-xl text-xs';
+            } else {
+                devSub.classList.remove('hidden');
+                btnDev.className = 'tv-focusable px-3 py-1.5 bg-blue-600 text-white font-semibold rounded-xl text-xs';
+            }
+            setTimeout(initFocus, 50);
+        }
+
+        let developerModeEnabled = false;
+        function toggleDeveloperMode() {
+            developerModeEnabled = !developerModeEnabled;
+            const thumb = document.getElementById('dev-mode-thumb');
+            const box = document.getElementById('dev-mode-toggle-box');
+            const statusText = document.getElementById('dev-status-text');
+            const adbUsb = document.getElementById('adb-usb-status');
+            const adbNet = document.getElementById('adb-net-status');
+
+            if (developerModeEnabled) {
+                thumb.style.transform = 'translateX(40px)';
+                thumb.classList.replace('bg-slate-400', 'bg-white');
+                box.classList.replace('bg-slate-800', 'bg-blue-600');
+                statusText.innerText = 'Enabled (Android 9 API 28)';
+                statusText.className = 'text-emerald-400';
+                adbUsb.innerText = 'Enabled (Authorized)';
+                adbUsb.className = 'text-emerald-400';
+                adbNet.innerText = 'Available (Port 5555)';
+                adbNet.className = 'text-emerald-400';
+                showToast('Developer Mode', 'Android 9 Developer Options activated.');
+            } else {
+                thumb.style.transform = 'translateX(0px)';
+                thumb.classList.replace('bg-white', 'bg-slate-400');
+                box.classList.replace('bg-blue-600', 'bg-slate-800');
+                statusText.innerText = 'Disabled (Restricted by OS)';
+                statusText.className = 'text-amber-400';
+                adbUsb.innerText = 'Disabled';
+                adbUsb.className = 'text-rose-400';
+                adbNet.innerText = 'Unavailable / Port 5555';
+                adbNet.className = 'text-amber-400';
+                showToast('Developer Mode', 'Developer options deactivated in VW Lite OS UI.');
+            }
+        }
+
+        function copyTvIp() {
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = '172.20.10.2';
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            showToast('ADB Connection', 'TV IP address (172.20.10.2) copied to clipboard! Run "adb connect 172.20.10.2:5555".');
+        }
+
+        // App Store Filtering & Installation
+        function filterStore(category) {
+            const items = document.querySelectorAll('.store-item');
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            showToast('App Store', `Filtered by category: ${category.toUpperCase()}`);
+            setTimeout(initFocus, 100);
+        }
+
+        function installApp(appName, size) {
+            showToast('APK Installation', `Downloading ${appName} (${size})...\nVerifying ARM architecture & signature for Android 9 API 28.`);
+            setTimeout(() => {
+                showToast('Success', `${appName} successfully installed via Android Package Installer.`);
+            }, 2500);
+        }
+
+        // IPTV Channel Player & Session Recorder
+        function playChannel(name, url, category) {
+            document.getElementById('now-playing-title').innerText = `${name} (Live Stream)`;
+            document.getElementById('now-playing-category').innerText = `Category: ${category} · ExoPlayer Active`;
+            
+            // Update session memory
+            playbackSession.last_channel_name = name;
+            playbackSession.last_stream_url = url;
+            playbackSession.last_category = category;
+            localStorage.setItem('vw_lite_os_session', JSON.stringify(playbackSession));
+            updateSessionDisplay();
+
+            showToast('IPTV Player', `Tuning into ${name} via M3U playlist stream.`);
+        }
+
+        function loadIPTVCategory(cat) {
+            showToast('IPTV', `Loaded playlist for category: ${cat.toUpperCase()}`);
+        }
+
+        function switchInput(inputName) {
+            showToast('TV Input Framework', `Switching active hardware source to ${inputName}...`);
+        }
+
+        // Physical Remote Control / Keyboard Navigation Engine
+        let focusables = [];
+        let currentIndex = 0;
+
+        function initFocus() {
+            const activeView = document.querySelector('.view-section:not(.hidden)');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            
+            focusables = [
+                ...Array.from(navTabs),
+                ...Array.from(activeView.querySelectorAll('.tv-focusable:not(.nav-tab)'))
+            ];
+
+            if (focusables.length > 0) {
+                currentIndex = 0;
+                updateFocusStyles();
+            }
+        }
+
+        function updateFocusStyles() {
+            focusables.forEach((el, idx) => {
+                if (idx === currentIndex) {
+                    el.classList.add('focused');
+                    el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                } else {
+                    el.classList.remove('focused');
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (focusables.length === 0) return;
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                currentIndex = (currentIndex + 1) % focusables.length;
+                updateFocusStyles();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                currentIndex = (currentIndex - 1 + focusables.length) % focusables.length;
+                updateFocusStyles();
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (focusables[currentIndex]) {
+                    focusables[currentIndex].click();
+                    setTimeout(initFocus, 50);
+                }
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                const tabs = ['home', 'apps', 'store', 'iptv', 'inputs', 'network', 'settings'];
+                const activeTabEl = document.querySelector('.nav-tab.focused') || document.querySelector('.nav-tab');
+                let currentTabIdx = tabs.indexOf(activeTabEl?.getAttribute('data-tab') || 'home');
+                let nextTabIdx = (currentTabIdx + 1) % tabs.length;
+                switchTab(tabs[nextTabIdx]);
+            }
+        });
+
+        document.addEventListener('mouseover', (e) => {
+            const target = e.target.closest('.tv-focusable');
+            if (target) {
+                const foundIdx = focusables.indexOf(target);
+                if (foundIdx !== -1) {
+                    currentIndex = foundIdx;
+                    updateFocusStyles();
+                }
+            }
+        });
+
+        // Initialize on load & auto-open configured startup destination
+        window.onload = () => {
+            loadStartupPreferences();
+            
+            // Check startup destination preference on boot simulation
+            const startDest = playbackSession.startup_destination || 'iptv';
+            if (startDest === 'home') switchTab('home');
+            else if (startDest === 'iptv') switchTab('iptv');
+            else if (startDest === 'iptv-guide') switchTab('iptv');
+            else if (startDest === 'inputs') switchTab('inputs');
+            else if (startDest === 'apps') switchTab('apps');
+            else if (startDest === 'store') switchTab('store');
+            else if (startDest === 'network') switchTab('network');
+            else switchTab('home');
+
+            initFocus();
+        };
+    </script>
+</body>
+</html>

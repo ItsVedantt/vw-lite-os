@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.provider.Settings;
 
 import com.vw.liteos.model.DeviceInfo;
 
@@ -48,5 +49,23 @@ public class DeviceInfoManager {
         info.setSupportedAbis(Build.SUPPORTED_ABIS);
 
         return info;
+    }
+
+    public static boolean isDeveloperOptionsEnabled(Context context) {
+        try {
+            return Settings.Global.getInt(context.getContentResolver(),
+                    Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) != 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean isAdbEnabled(Context context) {
+        try {
+            return Settings.Global.getInt(context.getContentResolver(),
+                    Settings.Global.ADB_ENABLED, 0) != 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

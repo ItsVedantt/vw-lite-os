@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
-    android:layout_height="140dp"
-    android:layout_margin="8dp"
+    android:layout_width="105dp"
+    android:layout_height="95dp"
+    android:layout_marginEnd="10dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="12dp"
+    android:padding="8dp"
     android:focusable="true"
     android:clickable="true"
     android:background="@drawable/selector_card_bg">
@@ -16,16 +16,16 @@
 
         <ImageView
             android:id="@+id/ivAppIcon"
-            android:layout_width="68dp"
-            android:layout_height="68dp"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
             android:scaleType="fitCenter"
             android:contentDescription="@null"
             android:src="@drawable/ic_launcher_vw" />
 
         <ImageView
             android:id="@+id/ivFavorite"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_gravity="top|end"
             android:src="@drawable/ic_star_filled"
             android:visibility="gone"
@@ -36,12 +36,12 @@
         android:id="@+id/tvAppLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:singleLine="true"
         android:ellipsize="marquee"
         android:textColor="@color/text_primary"
-        android:textSize="14sp"
+        android:textSize="11sp"
         android:textStyle="bold"
         android:text="App Name" />
 
